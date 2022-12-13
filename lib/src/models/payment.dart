@@ -1,6 +1,5 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:ipay_money_flutter_sdk/ipay_money_flutter_sdk.dart';
 part 'payment.freezed.dart';
 part 'payment.g.dart';
 
@@ -27,3 +26,12 @@ class Payment with _$Payment {
     TargetEnvironment? targetEnvironment,
   }) = _Payment;
 }
+
+// Define the `Country` enum
+enum Country { ne, bj }
+
+// Define the `PaymentType` enum
+enum PaymentType { mobile, alizza, card }
+
+// Define the `TargetEnvironment` enum
+enum TargetEnvironment { live, sandbox }

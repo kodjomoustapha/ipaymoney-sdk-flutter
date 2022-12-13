@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ipay_money_flutter_sdk/models/payment.dart';
-import 'package:ipay_money_flutter_sdk/providers/state_providers.dart';
-import 'package:ipay_money_flutter_sdk/services/ipay_services.dart';
+import 'package:ipay_money_flutter_sdk/src/models/payment.dart';
+import 'package:ipay_money_flutter_sdk/src/providers/state_providers.dart';
+import 'package:ipay_money_flutter_sdk/src/services/ipay_services.dart';
 
 // Define a FutureProvider for checking the status of a payment with a given timeout
 final enquiryTimeoutProvider =

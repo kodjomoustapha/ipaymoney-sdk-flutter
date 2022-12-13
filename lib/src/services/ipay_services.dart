@@ -2,10 +2,9 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
-import 'package:ipay_money_flutter_sdk/ipay_money_flutter_sdk.dart';
-import 'package:ipay_money_flutter_sdk/models/payment.dart';
-import 'package:ipay_money_flutter_sdk/models/state_response_ipay.dart';
-import 'package:ipay_money_flutter_sdk/utils/utils.dart';
+import 'package:ipay_money_flutter_sdk/src/models/payment.dart';
+import 'package:ipay_money_flutter_sdk/src/models/state_response_ipay.dart';
+import 'package:ipay_money_flutter_sdk/src/utils/utils.dart';
 import 'package:random_string/random_string.dart';
 
 /// This class provides methods to interact with the iPay.Money API
@@ -102,7 +101,7 @@ class IpayServices {
     }
   }
 
-  /// Sends a PUT request to the API to update the status of a payment. If the request
+  /// Sends a POST request to the API to update the status of a payment. If the request
   /// is successful, it returns the response body as a string. Otherwise, it returns
   /// the response's reason phrase.
   Future<dynamic> visaMasterCardRequest(
