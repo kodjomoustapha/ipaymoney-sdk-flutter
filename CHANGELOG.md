@@ -1,3 +1,3 @@
-## 0.0.1
+## 0.0.1+1
 
-* A payment method flutter package from the i-pay.money platform.
+* Fix Dart file conventions.
