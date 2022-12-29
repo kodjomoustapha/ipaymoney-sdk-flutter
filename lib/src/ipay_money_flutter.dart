@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ipay_money_flutter_sdk/src/models/payment.dart';
@@ -9,8 +8,6 @@ import 'package:ipay_money_flutter_sdk/src/providers/ipay_payment_provider.dart'
 import 'package:ipay_money_flutter_sdk/src/providers/state_providers.dart';
 import 'package:ipay_money_flutter_sdk/src/utils/media_query.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
-
 
 class IpayPayments {
   /// the amount of the payment
@@ -101,7 +98,7 @@ class IpayPayments {
                             .watch(ipayVisaMasterCardPaymentProvider(encode)
                                 .future)
                             .then((value) {
-                          log(value.notificationUrl);
+                          // log(value.notificationUrl);
                           Navigator.pop(context);
 
                           var url =
@@ -186,6 +183,9 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
     super.initState();
   }
 
+  var encode = json.encode({
+    "status": "failed",
+  });
   @override
   Widget build(BuildContext context) {
     var encodeS = json.encode({
@@ -210,94 +210,119 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
       });
     }
 
-    return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        height: mediaHeight(context, 1),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            isSucces == true
-                ? const Text('Paiement effectuer avec succès',
-                    style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20),
-                    textAlign: TextAlign.center)
-                : isFailed == true
-                    ? Column(
-                        children: const [
-                          Text(
-                            'La transaction a échouée.\nVeuillez reprendre le paiement',
-                            style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20),
-                            textAlign: TextAlign.center,
-                          ),
-                          Icon(
-                            Icons.error,
-                            color: Colors.red,
-                            size: 30,
-                          )
-                        ],
-                      )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Transaction en cours....",
+    return WillPopScope(
+      onWillPop: () async {
+        if (mounted) {
+          widget.callback(encode);
+          Navigator.pop(context);
+        }
+        return false;
+      },
+      child: Scaffold(
+        body: SizedBox(
+          width: double.infinity,
+          height: mediaHeight(context, 1),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              isSucces == true
+                  ? const Text('Paiement effectuer avec succès',
+                      style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20),
+                      textAlign: TextAlign.center)
+                  : isFailed == true
+                      ? Column(
+                          children: const [
+                            Text(
+                              'La transaction a échouée.\nVeuillez reprendre le paiement',
                               style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 22),
-                              textAlign: TextAlign.center),
-                          const SizedBox(
-                            height: 20,
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20),
+                              textAlign: TextAlign.center,
+                            ),
+                            Icon(
+                              Icons.error_outline_outlined,
+                              color: Colors.red,
+                              size: 50,
+                            )
+                          ],
+                        )
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Transaction en cours....",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 22),
+                                textAlign: TextAlign.center),
+                            if (payment.paymentType == PaymentType.mobile)
+                              Column(
+                                children: const [
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                      'Veuillez valider le push que vous avez reçu sur votre téléphone...',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 17),
+                                      textAlign: TextAlign.center),
+                                ],
+                              ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            if (payment.paymentType == PaymentType.alizza)
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                    'Veuillez vous rendre dans un centre AL IZZA et fournir ce code:',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                    textAlign: TextAlign.center),
+                              ),
+                            if (payment.paymentType == PaymentType.alizza)
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(widget.publicReference,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25),
+                                    textAlign: TextAlign.center),
+                              ),
+                          ],
+                        ),
+              const SizedBox(
+                height: 20,
+              ),
+              isSucces == true
+                  ? const Icon(
+                      Icons.verified_rounded,
+                      color: Colors.green,
+                      size: 30,
+                    )
+                  : isFailed == true
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            backgroundColor: Colors.green,
                           ),
-                          if (payment.paymentType == PaymentType.alizza)
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                  'Veuillez vous rendre dans un centre AL IZZA et fournir ce code:',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17),
-                                  textAlign: TextAlign.center),
-                            ),
-                          if (payment.paymentType == PaymentType.alizza)
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(widget.publicReference,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25),
-                                  textAlign: TextAlign.center),
-                            ),
-                        ],
-                      ),
-            const SizedBox(
-              height: 20,
-            ),
-            isSucces == true
-                ? const Icon(
-                    Icons.verified_rounded,
-                    color: Colors.green,
-                    size: 30,
-                  )
-                : isFailed == true
-                    ? ElevatedButton(
-                        onPressed: () {
-                          var encode = json.encode({
-                            "status": "failed",
-                          });
-                          if (mounted) {
-                            setState(() {
+                          onPressed: () {
+                            if (mounted) {
                               widget.callback(encode);
                               Navigator.pop(context);
-                            });
-                          }
-                        },
-                        child: const Text('Retour'))
-                    : const CircularProgressIndicator()
-          ],
+                            }
+                          },
+                          child: const Text('Retour'))
+                      : const CircularProgressIndicator(
+                          color: Colors.green,
+                        )
+            ],
+          ),
         ),
       ),
     );
@@ -343,10 +368,8 @@ class _IpayBankConsumerState extends ConsumerState<IpayBankConsumer> {
               await Future.delayed(const Duration(seconds: 3));
 
               if (mounted) {
-                setState(() {
-                  widget.callback(encode);
-                  Navigator.pop(context);
-                });
+                widget.callback(encode);
+                Navigator.pop(context);
               }
             }
           },

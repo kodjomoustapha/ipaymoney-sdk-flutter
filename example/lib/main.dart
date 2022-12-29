@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:ipay_money_flutter_sdk/ipay_money_flutter_sdk.dart';
 import 'package:ipay_money_flutter_sdk_example/widget/logo_operateur.dart';
@@ -309,7 +310,7 @@ class _TestState extends State<Test> {
                                 borderRadius: BorderRadius.circular(10))),
                         onPressed: () {
                           IpayPayments(
-                            timeOut: 10,
+                            timeOut: 5,
                             amount: _mycontrollerAmount.text,
                             authorization:
                                 'api key',
@@ -340,6 +341,8 @@ class _TestState extends State<Test> {
                                       duration: const Duration(seconds: 3),
                                     ));
                                   }
+                                } else {
+                                  log(callback.toString());
                                 }
                               });
                         },

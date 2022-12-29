@@ -4,12 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:ipay_money_flutter_sdk/src/models/payment.dart';
 import 'package:ipay_money_flutter_sdk/src/models/state_response_ipay.dart';
-import 'package:ipay_money_flutter_sdk/src/utils/utils.dart';
 import 'package:random_string/random_string.dart';
 
 /// This class provides methods to interact with the iPay.Money API
 /// to make payments, retrieve payment information, and update payment statuses.
 class IpayServices {
+
+  
+  String _convertEnumToString(dynamic o) =>
+      o.toString().split('.')[1].toLowerCase();
+
   /// Sends a GET request to the API to retrieve information about the payment specified
   /// by the reference property of the Payment object. If the request is successful,
   /// it returns the response body as a string. Otherwise, it returns the response's reason phrase.
@@ -17,9 +21,9 @@ class IpayServices {
     required Payment payment,
   }) async {
     var headers = {
-      'Ipay-Payment-Type': convertEnumToString(payment.paymentType).toString(),
+      'Ipay-Payment-Type': _convertEnumToString(payment.paymentType).toString(),
       'Ipay-Target-Environment':
-          convertEnumToString(payment.targetEnvironment).toString(),
+          _convertEnumToString(payment.targetEnvironment).toString(),
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${payment.authorization}',
     };
@@ -48,8 +52,9 @@ class IpayServices {
     var random = randomNumeric(10);
     var headers = {
       'Ipay-Target-Environment':
-          convertEnumToString(payment!.targetEnvironment!).toString(),
-      'Ipay-Payment-Type': convertEnumToString(payment.paymentType!).toString(),
+          _convertEnumToString(payment!.targetEnvironment!).toString(),
+      'Ipay-Payment-Type':
+          _convertEnumToString(payment.paymentType!).toString(),
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${payment.authorization}',
     };
@@ -63,7 +68,7 @@ class IpayServices {
             "customer_name": payment.name,
             "currency": "XOF",
             "country":
-                convertEnumToString(payment.country!).toString().toUpperCase(),
+                _convertEnumToString(payment.country!).toString().toUpperCase(),
             "amount": payment.amount,
             "transaction_id": "random-$random",
             "msisdn": payment.country == Country.ne
@@ -78,7 +83,7 @@ class IpayServices {
             "customer_name": payment.name,
             "currency": "XOF",
             "country":
-                convertEnumToString(payment.country!).toString().toUpperCase(),
+                _convertEnumToString(payment.country!).toString().toUpperCase(),
             "amount": payment.amount,
             "transaction_id": "random-$random",
             "msisdn": payment.targetEnvironment == TargetEnvironment.live

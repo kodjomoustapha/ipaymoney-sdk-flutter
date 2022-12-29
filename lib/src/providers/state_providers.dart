@@ -12,8 +12,8 @@ final failedStateProviders = StateProvider.autoDispose<bool?>((ref) {
   return false;
 });
 
-// Define a StateProvider for the loading state
-final loadingStateProviders = StateProvider.autoDispose<bool?>((ref) {
+// Define a StateProvider for the cancel state
+final cancelStateProviders = StateProvider.autoDispose<bool?>((ref) {
   // The initial value is false
   return false;
 });
