@@ -1,3 +1,3 @@
-## 0.0.1+2
+## 0.0.2+3
 
-* Fix Dart file conventions.
+* Update some dependencies & fix transaction timeout problem

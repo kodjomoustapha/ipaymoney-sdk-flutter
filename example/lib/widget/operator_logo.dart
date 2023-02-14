@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class LogoOperateur extends StatelessWidget {
+class OperatorLogo extends StatelessWidget {
   final String imgUrl;
-  const LogoOperateur({Key? key, required this.imgUrl}) : super(key: key);
+  const OperatorLogo({Key? key, required this.imgUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +10,7 @@ class LogoOperateur extends StatelessWidget {
       borderRadius: BorderRadius.circular(5),
       child: Image.asset(
         imgUrl,
-        height: 50,
+        height: 25,
       ),
     );
   }

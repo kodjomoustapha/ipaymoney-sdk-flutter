@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:ipay_money_flutter_sdk/ipay_money_flutter_sdk.dart';
-import 'package:ipay_money_flutter_sdk_example/widget/logo_operateur.dart';
-import 'package:ipay_money_flutter_sdk_example/widget/type_paiement_widget.dart';
+import 'package:ipay_money_flutter_sdk_example/widget/operator_logo.dart';
+import 'package:ipay_money_flutter_sdk_example/widget/type_payment_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,15 +55,15 @@ class _TestState extends State<Test> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TypePaiementWidget(
+                PaymentTypeWidget(
                   list: const [
                     Padding(
                       padding: EdgeInsets.all(5),
-                      child: LogoOperateur(imgUrl: "assets/airtel.png"),
+                      child: OperatorLogo(imgUrl: "assets/airtel.png"),
                     ),
                     Padding(
                       padding: EdgeInsets.all(5),
-                      child: LogoOperateur(imgUrl: "assets/moov.jpeg"),
+                      child: OperatorLogo(imgUrl: "assets/moov.jpeg"),
                     )
                   ],
                   label: "Mobile Money",
@@ -78,11 +78,11 @@ class _TestState extends State<Test> {
                   isTapVisa: false,
                   isTapAlIzza: false,
                 ),
-                TypePaiementWidget(
+                PaymentTypeWidget(
                   list: const [
                     Padding(
                       padding: EdgeInsets.all(5),
-                      child: LogoOperateur(imgUrl: "assets/alizza.png"),
+                      child: OperatorLogo(imgUrl: "assets/alizza.png"),
                     )
                   ],
                   label: "AlIzza",
@@ -99,15 +99,15 @@ class _TestState extends State<Test> {
                 ),
                 Column(
                   children: [
-                    TypePaiementWidget(
+                    PaymentTypeWidget(
                       list: const [
                         Padding(
                           padding: EdgeInsets.all(5),
-                          child: LogoOperateur(imgUrl: "assets/mastercard.png"),
+                          child: OperatorLogo(imgUrl: "assets/mastercard.png"),
                         ),
                         Padding(
                           padding: EdgeInsets.all(5),
-                          child: LogoOperateur(imgUrl: "assets/visa.png"),
+                          child: OperatorLogo(imgUrl: "assets/visa.png"),
                         ),
                       ],
                       label: "Carte Bancaire",
@@ -313,7 +313,7 @@ class _TestState extends State<Test> {
                             timeOut: 5,
                             amount: _mycontrollerAmount.text,
                             authorization:
-                                'api key',
+                                'secret key',
                             country: Country.ne,
                             currency: 'XOF',
                             exp: _mycontrollerExp.text,

@@ -6,7 +6,6 @@ import 'package:ipay_money_flutter_sdk/src/models/payment.dart';
 import 'package:ipay_money_flutter_sdk/src/providers/enquiry_timeout_provider.dart';
 import 'package:ipay_money_flutter_sdk/src/providers/ipay_payment_provider.dart';
 import 'package:ipay_money_flutter_sdk/src/providers/state_providers.dart';
-import 'package:ipay_money_flutter_sdk/src/utils/media_query.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class IpayPayments {
@@ -106,7 +105,7 @@ class IpayPayments {
                           showDialog(
                               context: context,
                               builder: (_) => ProviderScope(
-                                    child: IpayBankConsumer(
+                                    child: IpayVisaMasterCard(
                                       payment: payment,
                                       reference: val['reference'],
                                       publicReference: val['public_reference'],
@@ -221,7 +220,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
       child: Scaffold(
         body: SizedBox(
           width: double.infinity,
-          height: mediaHeight(context, 1),
+          height: MediaQuery.of(context).size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -329,13 +328,13 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
   }
 }
 
-class IpayBankConsumer extends ConsumerStatefulWidget {
+class IpayVisaMasterCard extends StatefulWidget {
   final String url;
   final String reference;
   final Payment payment;
   final String publicReference;
   final Function(String) callback;
-  const IpayBankConsumer({
+  const IpayVisaMasterCard({
     required this.callback,
     super.key,
     required this.reference,
@@ -345,23 +344,24 @@ class IpayBankConsumer extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _IpayBankConsumerState();
+  State<StatefulWidget> createState() => _IpayVisaMasterCardState();
 }
 
-class _IpayBankConsumerState extends ConsumerState<IpayBankConsumer> {
+class _IpayVisaMasterCardState extends State<IpayVisaMasterCard> {
+  late WebViewController controller;
+
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     var encode = json.encode({
       "status": "success",
       "reference": widget.reference,
       "public_reference": widget.publicReference,
     });
-    return Scaffold(
-      body: SafeArea(
-        child: WebView(
-          initialUrl: widget.url,
-          javascriptMode: JavascriptMode.unrestricted,
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
           onPageFinished: (data) async {
             if (data.startsWith(
                 'https://i-pay.money/api/sdk/v1/emv_challenges/success')) {
@@ -373,8 +373,18 @@ class _IpayBankConsumerState extends ConsumerState<IpayBankConsumer> {
               }
             }
           },
-          gestureNavigationEnabled: true,
-          backgroundColor: const Color(0x00000000),
+        ),
+      )
+      ..loadRequest(Uri.parse(widget.url));
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: WebViewWidget(
+          controller: controller,
         ),
       ),
     );

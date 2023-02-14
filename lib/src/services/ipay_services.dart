@@ -9,8 +9,6 @@ import 'package:random_string/random_string.dart';
 /// This class provides methods to interact with the iPay.Money API
 /// to make payments, retrieve payment information, and update payment statuses.
 class IpayServices {
-
-  
   String _convertEnumToString(dynamic o) =>
       o.toString().split('.')[1].toLowerCase();
 
@@ -139,7 +137,6 @@ class IpayServices {
       var stateResponse = StateResponseIpay.fromJson(statusOk);
       return stateResponse;
     } else {
-      log(response.reasonPhrase!);
       return response.reasonPhrase;
     }
   }
