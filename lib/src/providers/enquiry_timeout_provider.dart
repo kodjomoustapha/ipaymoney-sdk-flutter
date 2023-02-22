@@ -52,6 +52,7 @@ final enquiryTimeoutProvider =
         }
       } catch (error) {
         // If an error occurs, cancel the timer
+        ref.read(failedStateProviders.notifier).update((state) => state = true);
         return false;
       }
 
