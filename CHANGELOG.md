@@ -1,3 +1,3 @@
-## 0.0.2
+## 0.0.21
 
-- Update some dependencies & fix transaction timeout problem
+- Fix If an error occurs, cancel the timer
