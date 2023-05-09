@@ -1,13 +1,9 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'payment.freezed.dart';
-part 'payment.g.dart';
 
 @freezed
 class Payment with _$Payment {
-  @JsonSerializable(
-    fieldRename: FieldRename.snake,
-  )
   const factory Payment({
     // Define the properties of the `Payment` class
     String? publicReference,

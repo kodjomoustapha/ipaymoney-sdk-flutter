@@ -260,7 +260,6 @@ class __$$_PaymentCopyWithImpl<$Res>
 
 /// @nodoc
 
-@JsonSerializable(fieldRename: FieldRename.snake)
 class _$_Payment implements _Payment {
   const _$_Payment(
       {this.publicReference,
