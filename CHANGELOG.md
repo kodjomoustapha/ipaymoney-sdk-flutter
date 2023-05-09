@@ -1,3 +1,3 @@
-## 0.0.21
+## 0.0.25
 
-- Fix If an error occurs, cancel the timer
+- Update some dependencies & code refactor

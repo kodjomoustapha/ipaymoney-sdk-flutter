@@ -1,6 +1,6 @@
 name: ipay_money_flutter_sdk
 description: A payment method flutter package from the i-pay.money platform.
-version: 0.0.21
+version: 0.0.25
 homepage: https://i-pay.money
 repository: https://github.com/kodjomoustapha/ipaymoney-sdk-flutter
 
