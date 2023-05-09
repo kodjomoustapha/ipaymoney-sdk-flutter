@@ -3,13 +3,19 @@
   "packages": [
     {
       "name": "_fe_analyzer_shared",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/_fe_analyzer_shared-52.0.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/_fe_analyzer_shared-55.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "analyzer",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/analyzer-5.4.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/analyzer-5.7.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "analyzer_plugin",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/analyzer_plugin-0.11.2",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -92,6 +98,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "cli_util",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/cli_util-0.3.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "clock",
       "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/clock-1.1.1",
       "packageUri": "lib/",
@@ -120,6 +132,18 @@
       "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.14"
+    },
+    {
+      "name": "custom_lint",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/custom_lint-0.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "custom_lint_core",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/custom_lint_core-0.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
     },
     {
       "name": "dart_style",
@@ -159,7 +183,7 @@
     },
     {
       "name": "flutter_riverpod",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_riverpod-2.2.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_riverpod-2.3.6",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -171,7 +195,7 @@
     },
     {
       "name": "freezed",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/freezed-2.3.2",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/freezed-2.3.3",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -201,9 +225,9 @@
     },
     {
       "name": "http",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/http-0.13.5",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/http-0.13.6",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.19"
     },
     {
       "name": "http_multi_server",
@@ -231,15 +255,15 @@
     },
     {
       "name": "json_annotation",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.8.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.8.1",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "2.19"
     },
     {
       "name": "json_serializable",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/json_serializable-6.6.1",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/json_serializable-6.6.2",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "2.19"
     },
     {
       "name": "lints",
@@ -321,9 +345,33 @@
     },
     {
       "name": "riverpod",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/riverpod-2.2.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/riverpod-2.3.6",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "riverpod_analyzer_utils",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/riverpod_analyzer_utils-0.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "riverpod_annotation",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/riverpod_annotation-2.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "riverpod_generator",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/riverpod_generator-2.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "rxdart",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/rxdart-0.27.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "shelf",
@@ -416,6 +464,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "uuid",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-3.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "vector_math",
       "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4",
       "packageUri": "lib/",
@@ -435,9 +489,9 @@
     },
     {
       "name": "webview_flutter",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter-4.0.2",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter-4.2.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
       "name": "webview_flutter_android",
@@ -447,9 +501,9 @@
     },
     {
       "name": "webview_flutter_platform_interface",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_platform_interface-2.0.1",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_platform_interface-2.3.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "webview_flutter_wkwebview",
@@ -470,7 +524,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-02-22T10:17:18.272891Z",
+  "generated": "2023-05-09T09:57:41.906534Z",
   "generator": "pub",
-  "generatorVersion": "2.19.2"
+  "generatorVersion": "2.19.5"
 }

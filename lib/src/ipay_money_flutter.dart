@@ -80,26 +80,21 @@ class IpayPayments {
         builder: (_) => ProviderScope(
               child: Consumer(builder: (context, ref, child) {
                 final startPayment =
-                    ref.watch(ipayPaymentProvider(payment).future);
+                    ref.watch(ipayPaymentProvider(payment: payment).future);
                 startPayment.then((value) {
                   if (value != null) {
                     var val = jsonDecode(value);
                     if (payment.paymentType == PaymentType.card) {
                       if (val['state'] == 'AWAIT_3DS') {
-                        var encode = json.encode({
-                          "authorization": payment.authorization,
-                          "order_reference": val['order_reference'],
-                          "reference": val['reference'],
-                          "payment_reference": val['payment_reference'],
-                        });
-
                         ref
-                            .watch(ipayVisaMasterCardPaymentProvider(encode)
+                            .watch(IpayVisaMasterCardPaymentProvider(
+                                    authorization: payment.authorization!,
+                                    orderReference: val['order_reference'],
+                                    reference: val['reference'],
+                                    paymentReference: val['payment_reference'])
                                 .future)
                             .then((value) {
-                          // log(value.notificationUrl);
                           Navigator.pop(context);
-
                           var url =
                               '${value.termUrlGet}?acs_url=${value.acsUrl}&base64_encoded_cqeq=${value.base64EncodedCqeq}&challenge_notification_url=${value.notificationUrl}';
                           showDialog(
@@ -200,10 +195,8 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
         if (timerPop.tick == 2) {
           timerPop.cancel();
           if (mounted) {
-            setState(() {
-              widget.callback(encodeS);
-              Navigator.pop(context);
-            });
+            widget.callback(encodeS);
+            Navigator.pop(context);
           }
         }
       });
@@ -243,7 +236,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                               textAlign: TextAlign.center,
                             ),
                             Icon(
-                              Icons.error_outline_outlined,
+                              Icons.cancel_outlined,
                               color: Colors.red,
                               size: 50,
                             )
@@ -306,8 +299,6 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                   : isFailed == true
                       ? ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
                             backgroundColor: Colors.green,
                           ),
                           onPressed: () {
