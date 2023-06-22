@@ -31,3 +31,6 @@ enum PaymentType { mobile, alizza, card }
 
 // Define the `TargetEnvironment` enum
 enum TargetEnvironment { live, sandbox }
+
+// Define the `TransactionStatus` enum
+enum TransactionStatus { succeeded, failed, pending }

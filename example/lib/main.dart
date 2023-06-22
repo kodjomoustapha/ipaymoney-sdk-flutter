@@ -310,7 +310,7 @@ class _TestState extends State<Test> {
                                 borderRadius: BorderRadius.circular(10))),
                         onPressed: () {
                           IpayPayments(
-                            timeOut: 5,
+                            timeOut: 60,
                             amount: _mycontrollerAmount.text,
                             authorization:
                                 'secret key',

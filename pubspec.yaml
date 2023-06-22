@@ -1,6 +1,6 @@
 name: ipay_money_flutter_sdk
 description: A payment method flutter package from the i-pay.money platform.
-version: 0.0.25
+version: 0.0.3
 homepage: https://i-pay.money
 repository: https://github.com/kodjomoustapha/ipaymoney-sdk-flutter
 
@@ -15,17 +15,17 @@ dependencies:
   http: ^0.13.6
   random_string: ^2.3.1
   flutter_riverpod: ^2.3.6
-  webview_flutter: ^4.2.0
+  webview_flutter: ^4.2.2
   freezed_annotation: ^2.2.0
   json_annotation: ^4.8.1
-  riverpod_annotation: ^2.0.2
+  riverpod_annotation: ^2.1.1
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.1
-  freezed: ^2.3.3
-  build_runner: ^2.3.3
-  json_serializable: ^6.6.2
-  riverpod_generator: ^2.1.4
+  freezed: ^2.3.5
+  build_runner: ^2.4.5
+  json_serializable: ^6.7.0
+  riverpod_generator: ^2.2.3

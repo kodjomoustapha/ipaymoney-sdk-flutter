@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ipay_money_flutter_sdk/src/models/payment.dart';
-import 'package:ipay_money_flutter_sdk/src/providers/enquiry_timeout_provider.dart';
 import 'package:ipay_money_flutter_sdk/src/providers/ipay_payment_provider.dart';
-import 'package:ipay_money_flutter_sdk/src/providers/state_providers.dart';
+import 'package:ipay_money_flutter_sdk/src/utils/utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class IpayPayments {
@@ -171,10 +172,20 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
       paymentType: widget.payment.paymentType,
       authorization: widget.payment.authorization,
       reference: widget.reference);
+  late TransactionStatus _transactionStatus = TransactionStatus.pending;
   @override
   void initState() {
-    ref.read(enquiryTimeoutProvider(payment));
+    _init();
     super.initState();
+  }
+
+  _init() async {
+    final status = await _checkStatus(payment, ref);
+    if (mounted) {
+      setState(() {
+        _transactionStatus = status!;
+      });
+    }
   }
 
   var encode = json.encode({
@@ -188,9 +199,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
       "public_reference": widget.publicReference,
     });
 
-    final isSucces = ref.watch(succesStateProviders);
-    final isFailed = ref.watch(failedStateProviders);
-    if (isSucces == true) {
+    if (_transactionStatus == TransactionStatus.succeeded) {
       Timer.periodic(const Duration(seconds: 2), (timerPop) {
         if (timerPop.tick == 2) {
           timerPop.cancel();
@@ -217,16 +226,16 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              isSucces == true
+              _transactionStatus == TransactionStatus.succeeded
                   ? const Text('Paiement effectuer avec succès',
                       style: TextStyle(
                           color: Colors.green,
                           fontWeight: FontWeight.w500,
                           fontSize: 20),
                       textAlign: TextAlign.center)
-                  : isFailed == true
-                      ? Column(
-                          children: const [
+                  : _transactionStatus == TransactionStatus.failed
+                      ? const Column(
+                          children: [
                             Text(
                               'La transaction a échouée.\nVeuillez reprendre le paiement',
                               style: TextStyle(
@@ -250,8 +259,8 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                                     fontWeight: FontWeight.w500, fontSize: 22),
                                 textAlign: TextAlign.center),
                             if (payment.paymentType == PaymentType.mobile)
-                              Column(
-                                children: const [
+                              const Column(
+                                children: [
                                   SizedBox(
                                     height: 20,
                                   ),
@@ -290,13 +299,13 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
               const SizedBox(
                 height: 20,
               ),
-              isSucces == true
+              _transactionStatus == TransactionStatus.succeeded
                   ? const Icon(
                       Icons.verified_rounded,
                       color: Colors.green,
                       size: 30,
                     )
-                  : isFailed == true
+                  : _transactionStatus == TransactionStatus.failed
                       ? ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green,
@@ -380,4 +389,43 @@ class _IpayVisaMasterCardState extends State<IpayVisaMasterCard> {
       ),
     );
   }
+}
+
+Future<TransactionStatus?> _checkStatus(Payment payment, WidgetRef ref) async {
+  TransactionStatus? status;
+  int timer = 0;
+  await Future.delayed(const Duration(milliseconds: 100));
+  await Future.doWhile(() async {
+    await Future.delayed(const Duration(seconds: 1));
+    timer++;
+    if (kDebugMode) {
+      log('$timer');
+    }
+    try {
+      final result = await ref
+          .read(paymentEnquiryProvider(payment: payment).future)
+          .onError((error, stackTrace) {
+        status = TransactionStatus.failed;
+      });
+
+      final value = jsonDecode(result);
+
+      if (kDebugMode) {
+        log(value['status']);
+      }
+      status = getTransactionStatusEnum(value['status']!.toLowerCase());
+
+      if (status != TransactionStatus.pending) {
+        return false;
+      } else if (timer == payment.timeOut) {
+        status = TransactionStatus.failed;
+        return false;
+      }
+    } catch (_) {
+      status = TransactionStatus.failed;
+      return false;
+    }
+    return true;
+  });
+  return status;
 }
