@@ -1,4 +1,4 @@
-## 0.0.3
+## 0.0.26
 
 - Fix payment enquiry, update some dependencies & remove some unnecessary code 
 ## 0.0.25
