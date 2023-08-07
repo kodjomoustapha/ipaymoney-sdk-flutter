@@ -1,3 +1,6 @@
+## 0.0.27
+
+- Update dependencies
 ## 0.0.26
 
 - Fix payment enquiry, update some dependencies & remove some unnecessary code 
