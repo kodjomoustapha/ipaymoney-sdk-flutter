@@ -19,6 +19,7 @@ class Payment with _$Payment {
     String? exp,
     String? cvv,
     int? timeOut,
+    String? referencePrefix,
     TargetEnvironment? targetEnvironment,
   }) = _Payment;
 }

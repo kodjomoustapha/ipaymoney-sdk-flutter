@@ -313,7 +313,7 @@ class _TestState extends State<Test> {
                             timeOut: 60,
                             amount: _mycontrollerAmount.text,
                             authorization:
-                                'secret key',
+                                'Your secret key',
                             country: Country.ne,
                             currency: 'XOF',
                             exp: _mycontrollerExp.text,
@@ -321,7 +321,8 @@ class _TestState extends State<Test> {
                             cvv: _mycontrollerCvv.text,
                             msisdn: _mycontrollerNumber.text,
                             name: _mycontrollerName.text,
-                            targetEnvironment: TargetEnvironment.sandbox,
+                            targetEnvironment: TargetEnvironment.live,
+                            referencePrefix: "LoremIpsum",
                             paymentType: _isMobileMoney
                                 ? PaymentType.mobile
                                 : _isAlIzza

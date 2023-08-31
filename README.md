@@ -143,11 +143,12 @@ if (mounted) {
 | authorization     | String?                | true     | Your i-pay.money account secret key.                                      |
 | name              | String?                | true     | The name of the person making the payment.                                |
 | amount            | String?                | true     | The payment amount.                                                       |
-| currency          | String?                | true     | The currency.                                                     |
+| currency          | String?                | true     | The currency.                                                             |
 | country           | enum Country           | true     | The country in which the payment is made (ne,bn)                          |
 | msisdn            | String?                | true     | The phone number.                                                         |
 | paymentType       | enum PaymentType       | true     | The type of payment (mobile, alizza, card)                                |
 | pan               | String?                | false    | The credit card number.                                                   |
+| referencePrefix    | String?                | false    | The reference sufix that let you track the type of the transaction.       |
 | cvv               | String?                | false    | The credit card code.                                                     |
 | exp               | String?                | false    | The expiration date of the credit card.                                   |
 | timeOut           | int?                   | false    | The maximum delay in seconds for the payment enquiry.                     |

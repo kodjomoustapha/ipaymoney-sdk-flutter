@@ -17,7 +17,7 @@ Future<dynamic> ipayPayment(
   IpayPaymentRef ref, {
   required Payment? payment,
 }) async {
-  var random = randomNumeric(10);
+  var random = randomAlphaNumeric(20);
   var headers = {
     'Ipay-Target-Environment':
         convertEnumToString(payment!.targetEnvironment!).toString(),
@@ -37,7 +37,7 @@ Future<dynamic> ipayPayment(
           "country":
               convertEnumToString(payment.country!).toString().toUpperCase(),
           "amount": payment.amount,
-          "transaction_id": "random-$random",
+          "transaction_id": "${payment.referencePrefix ?? "random"}-$random",
           "msisdn": payment.country == Country.ne
               ? '227${payment.msisdn}'
               : '225${payment.msisdn}',
@@ -52,7 +52,7 @@ Future<dynamic> ipayPayment(
           "country":
               convertEnumToString(payment.country!).toString().toUpperCase(),
           "amount": payment.amount,
-          "transaction_id": "random-$random",
+          "transaction_id": "${payment.referencePrefix ?? "random"}-$random",
           "msisdn": payment.targetEnvironment == TargetEnvironment.live
               ? payment.country == Country.ne
                   ? '227${payment.msisdn}'

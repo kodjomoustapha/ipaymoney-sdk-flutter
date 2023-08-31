@@ -46,6 +46,9 @@ class IpayPayments {
   /// the card number for a card payment
   String pan;
 
+  ///The reference sufix that let you track the type of the transaction.
+  String? referencePrefix;
+
   IpayPayments(
       {required this.amount,
       required this.authorization,
@@ -58,7 +61,8 @@ class IpayPayments {
       this.timeOut = 5,
       this.cvv = '',
       this.exp = '',
-      this.pan = ''});
+      this.pan = '',
+      this.referencePrefix});
 
   ipayPayment(
       {required BuildContext context,
@@ -75,7 +79,8 @@ class IpayPayments {
         name: name,
         targetEnvironment: targetEnvironment,
         paymentType: paymentType,
-        timeOut: timeOut);
+        timeOut: timeOut,
+        referencePrefix: referencePrefix!.replaceAll(" ", ""));
     showDialog(
         context: context,
         builder: (_) => ProviderScope(
@@ -88,7 +93,7 @@ class IpayPayments {
                     if (payment.paymentType == PaymentType.card) {
                       if (val['state'] == 'AWAIT_3DS') {
                         ref
-                            .watch(IpayVisaMasterCardPaymentProvider(
+                            .watch(ipayVisaMasterCardPaymentProvider(
                                     authorization: payment.authorization!,
                                     orderReference: val['order_reference'],
                                     reference: val['reference'],
@@ -166,7 +171,7 @@ class IpayConsumer extends ConsumerStatefulWidget {
 }
 
 class _IpayConsumerState extends ConsumerState<IpayConsumer> {
-  late Payment payment = Payment(
+  late final Payment _payment = Payment(
       timeOut: widget.payment.timeOut,
       targetEnvironment: widget.payment.targetEnvironment,
       paymentType: widget.payment.paymentType,
@@ -180,7 +185,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
   }
 
   _init() async {
-    final status = await _checkStatus(payment, ref);
+    final status = await _checkStatus(_payment, ref);
     if (mounted) {
       setState(() {
         _transactionStatus = status!;
@@ -258,7 +263,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500, fontSize: 22),
                                 textAlign: TextAlign.center),
-                            if (payment.paymentType == PaymentType.mobile)
+                            if (_payment.paymentType == PaymentType.mobile)
                               const Column(
                                 children: [
                                   SizedBox(
@@ -275,7 +280,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                             const SizedBox(
                               height: 20,
                             ),
-                            if (payment.paymentType == PaymentType.alizza)
+                            if (_payment.paymentType == PaymentType.alizza)
                               const Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Text(
@@ -285,7 +290,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                                         fontSize: 17),
                                     textAlign: TextAlign.center),
                               ),
-                            if (payment.paymentType == PaymentType.alizza)
+                            if (_payment.paymentType == PaymentType.alizza)
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(widget.publicReference,
@@ -348,7 +353,7 @@ class IpayVisaMasterCard extends StatefulWidget {
 }
 
 class _IpayVisaMasterCardState extends State<IpayVisaMasterCard> {
-  late WebViewController controller;
+  late WebViewController _controller;
 
   @override
   void initState() {
@@ -357,14 +362,14 @@ class _IpayVisaMasterCardState extends State<IpayVisaMasterCard> {
       "reference": widget.reference,
       "public_reference": widget.publicReference,
     });
-    controller = WebViewController()
+    _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageFinished: (data) async {
             if (data.startsWith(
-                'https://i-pay.money/api/sdk/v1/emv_challenges/success')) {
+                'https://i-pay.money/api/sdk/v1/emv_challenges?reference=${widget.reference}')) {
               await Future.delayed(const Duration(seconds: 3));
 
               if (mounted) {
@@ -384,7 +389,7 @@ class _IpayVisaMasterCardState extends State<IpayVisaMasterCard> {
     return Scaffold(
       body: SafeArea(
         child: WebViewWidget(
-          controller: controller,
+          controller: _controller,
         ),
       ),
     );

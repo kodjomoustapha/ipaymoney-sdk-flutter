@@ -6,7 +6,7 @@ part of 'ipay_payment_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$ipayPaymentHash() => r'1f6288dd98c2f4c5427966ff4e37caab0abe4b6b';
+String _$ipayPaymentHash() => r'59ff36d23a53866c752b50d575a83c49df593ac3';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -396,4 +396,5 @@ class PaymentEnquiryProvider extends AutoDisposeFutureProvider<dynamic> {
     return _SystemHash.finish(hash);
   }
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
