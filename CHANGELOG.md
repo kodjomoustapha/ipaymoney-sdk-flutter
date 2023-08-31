@@ -1,4 +1,4 @@
-## 0.0.3
+## 0.0.28
 
 - Fix Visa/MasterCard payment error
 - Added referencePrefix (That let you track the type of the transaction)
