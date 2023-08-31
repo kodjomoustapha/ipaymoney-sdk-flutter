@@ -148,7 +148,7 @@ if (mounted) {
 | msisdn            | String?                | true     | The phone number.                                                         |
 | paymentType       | enum PaymentType       | true     | The type of payment (mobile, alizza, card)                                |
 | pan               | String?                | false    | The credit card number.                                                   |
-| referencePrefix    | String?                | false    | The reference sufix that let you track the type of the transaction.       |
+| referencePrefix   | String?                | false    | The reference prefix that let you track the type of the transaction.      |
 | cvv               | String?                | false    | The credit card code.                                                     |
 | exp               | String?                | false    | The expiration date of the credit card.                                   |
 | timeOut           | int?                   | false    | The maximum delay in seconds for the payment enquiry.                     |
