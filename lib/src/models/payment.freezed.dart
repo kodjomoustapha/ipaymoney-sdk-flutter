@@ -12,7 +12,7 @@ part of 'payment.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Payment {
@@ -156,10 +156,10 @@ class _$PaymentCopyWithImpl<$Res, $Val extends Payment>
 }
 
 /// @nodoc
-abstract class _$$_PaymentCopyWith<$Res> implements $PaymentCopyWith<$Res> {
-  factory _$$_PaymentCopyWith(
-          _$_Payment value, $Res Function(_$_Payment) then) =
-      __$$_PaymentCopyWithImpl<$Res>;
+abstract class _$$PaymentImplCopyWith<$Res> implements $PaymentCopyWith<$Res> {
+  factory _$$PaymentImplCopyWith(
+          _$PaymentImpl value, $Res Function(_$PaymentImpl) then) =
+      __$$PaymentImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -181,10 +181,11 @@ abstract class _$$_PaymentCopyWith<$Res> implements $PaymentCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_PaymentCopyWithImpl<$Res>
-    extends _$PaymentCopyWithImpl<$Res, _$_Payment>
-    implements _$$_PaymentCopyWith<$Res> {
-  __$$_PaymentCopyWithImpl(_$_Payment _value, $Res Function(_$_Payment) _then)
+class __$$PaymentImplCopyWithImpl<$Res>
+    extends _$PaymentCopyWithImpl<$Res, _$PaymentImpl>
+    implements _$$PaymentImplCopyWith<$Res> {
+  __$$PaymentImplCopyWithImpl(
+      _$PaymentImpl _value, $Res Function(_$PaymentImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -206,7 +207,7 @@ class __$$_PaymentCopyWithImpl<$Res>
     Object? referencePrefix = freezed,
     Object? targetEnvironment = freezed,
   }) {
-    return _then(_$_Payment(
+    return _then(_$PaymentImpl(
       publicReference: freezed == publicReference
           ? _value.publicReference
           : publicReference // ignore: cast_nullable_to_non_nullable
@@ -273,8 +274,8 @@ class __$$_PaymentCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Payment implements _Payment {
-  const _$_Payment(
+class _$PaymentImpl implements _Payment {
+  const _$PaymentImpl(
       {this.publicReference,
       this.reference,
       this.authorization,
@@ -329,10 +330,10 @@ class _$_Payment implements _Payment {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Payment &&
+            other is _$PaymentImpl &&
             (identical(other.publicReference, publicReference) ||
                 other.publicReference == publicReference) &&
             (identical(other.reference, reference) ||
@@ -379,8 +380,8 @@ class _$_Payment implements _Payment {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PaymentCopyWith<_$_Payment> get copyWith =>
-      __$$_PaymentCopyWithImpl<_$_Payment>(this, _$identity);
+  _$$PaymentImplCopyWith<_$PaymentImpl> get copyWith =>
+      __$$PaymentImplCopyWithImpl<_$PaymentImpl>(this, _$identity);
 }
 
 abstract class _Payment implements Payment {
@@ -399,7 +400,7 @@ abstract class _Payment implements Payment {
       final String? cvv,
       final int? timeOut,
       final String? referencePrefix,
-      final TargetEnvironment? targetEnvironment}) = _$_Payment;
+      final TargetEnvironment? targetEnvironment}) = _$PaymentImpl;
 
   @override // Define the properties of the `Payment` class
   String? get publicReference;
@@ -433,6 +434,6 @@ abstract class _Payment implements Payment {
   TargetEnvironment? get targetEnvironment;
   @override
   @JsonKey(ignore: true)
-  _$$_PaymentCopyWith<_$_Payment> get copyWith =>
+  _$$PaymentImplCopyWith<_$PaymentImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

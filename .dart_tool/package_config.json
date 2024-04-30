@@ -3,13 +3,13 @@
   "packages": [
     {
       "name": "_fe_analyzer_shared",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/_fe_analyzer_shared-63.0.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/_fe_analyzer_shared-67.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "analyzer",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/analyzer-6.1.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/analyzer-6.4.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -51,27 +51,27 @@
     },
     {
       "name": "build_daemon",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/build_daemon-4.0.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/build_daemon-4.0.1",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.0"
     },
     {
       "name": "build_resolvers",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/build_resolvers-2.2.1",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/build_resolvers-2.4.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "build_runner",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/build_runner-2.4.6",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/build_runner-2.4.9",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "build_runner_core",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/build_runner_core-7.2.10",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/build_runner_core-7.3.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "built_collection",
@@ -81,9 +81,9 @@
     },
     {
       "name": "built_value",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/built_value-8.6.1",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/built_value-8.9.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "characters",
@@ -105,9 +105,9 @@
     },
     {
       "name": "cli_util",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/cli_util-0.4.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/cli_util-0.4.1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "clock",
@@ -117,13 +117,13 @@
     },
     {
       "name": "code_builder",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/code_builder-4.5.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/code_builder-4.10.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "collection",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.2",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.18.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -141,21 +141,21 @@
     },
     {
       "name": "custom_lint",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/custom_lint-0.5.1",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/custom_lint-0.6.2",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "custom_lint_core",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/custom_lint_core-0.5.1",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/custom_lint_core-0.6.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "dart_style",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/dart_style-2.3.2",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/dart_style-2.3.6",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "fake_async",
@@ -179,17 +179,17 @@
       "name": "flutter",
       "rootUri": "file:///C:/flutter/packages/flutter",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.2"
     },
     {
       "name": "flutter_lints",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.2",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.3",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "2.19"
     },
     {
       "name": "flutter_riverpod",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_riverpod-2.3.6",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_riverpod-2.5.1",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -197,11 +197,11 @@
       "name": "flutter_test",
       "rootUri": "file:///C:/flutter/packages/flutter_test",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.2"
     },
     {
       "name": "freezed",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/freezed-2.4.2",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/freezed-2.5.2",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -231,9 +231,9 @@
     },
     {
       "name": "http",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.1.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.2.1",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.3"
     },
     {
       "name": "http_multi_server",
@@ -255,21 +255,39 @@
     },
     {
       "name": "js",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.7",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.7.1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.1"
     },
     {
       "name": "json_annotation",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.8.1",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.9.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "json_serializable",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/json_serializable-6.7.1",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/json_serializable-6.8.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "leak_tracker",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/leak_tracker-10.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "leak_tracker_flutter_testing",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/leak_tracker_flutter_testing-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "leak_tracker_testing",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/leak_tracker_testing-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
     },
     {
       "name": "lints",
@@ -285,27 +303,27 @@
     },
     {
       "name": "matcher",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.16",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.16+1",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "material_color_utilities",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/material_color_utilities-0.5.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/material_color_utilities-0.8.0",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "meta",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.9.1",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.11.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "mime",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/mime-1.0.4",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/mime-1.0.5",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.2"
     },
     {
       "name": "package_config",
@@ -315,15 +333,15 @@
     },
     {
       "name": "path",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.9.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "plugin_platform_interface",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.5",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.8",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "pool",
@@ -351,25 +369,25 @@
     },
     {
       "name": "riverpod",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/riverpod-2.3.6",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/riverpod-2.5.1",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "riverpod_analyzer_utils",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/riverpod_analyzer_utils-0.3.2",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/riverpod_analyzer_utils-0.5.1",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "riverpod_annotation",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/riverpod_annotation-2.1.1",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/riverpod_annotation-2.3.5",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "riverpod_generator",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/riverpod_generator-2.2.5",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/riverpod_generator-2.3.11",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -395,11 +413,11 @@
       "name": "sky_engine",
       "rootUri": "file:///C:/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.2"
     },
     {
       "name": "source_gen",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/source_gen-1.4.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/source_gen-1.5.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -416,22 +434,28 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "sprintf",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/sprintf-7.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "stack_trace",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/stack_trace-1.11.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/stack_trace-1.11.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "state_notifier",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/state_notifier-0.7.2+1",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/state_notifier-1.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "stream_channel",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/stream_channel-2.1.1",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/stream_channel-2.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.19"
     },
     {
       "name": "stream_transform",
@@ -453,9 +477,9 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.6.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.6.1",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "timing",
@@ -471,15 +495,21 @@
     },
     {
       "name": "uuid",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-3.0.7",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-4.3.3",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "vector_math",
       "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4",
       "packageUri": "lib/",
       "languageVersion": "2.14"
+    },
+    {
+      "name": "vm_service",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/vm_service-13.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "watcher",
@@ -489,39 +519,39 @@
     },
     {
       "name": "web",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/web-0.1.4-beta",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/web-0.5.0",
       "packageUri": "lib/",
-      "languageVersion": "3.1"
+      "languageVersion": "3.3"
     },
     {
       "name": "web_socket_channel",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/web_socket_channel-2.4.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/web_socket_channel-2.4.4",
       "packageUri": "lib/",
-      "languageVersion": "2.15"
+      "languageVersion": "3.3"
     },
     {
       "name": "webview_flutter",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter-4.2.2",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter-4.7.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.2"
     },
     {
       "name": "webview_flutter_android",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_android-3.9.2",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_android-3.15.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "webview_flutter_platform_interface",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_platform_interface-2.4.0",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_platform_interface-2.10.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "webview_flutter_wkwebview",
-      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_wkwebview-3.7.2",
+      "rootUri": "file:///C:/Users/kodjo/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_wkwebview-3.12.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.2"
     },
     {
       "name": "yaml",
@@ -536,7 +566,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-08-31T09:18:04.896747Z",
+  "generated": "2024-04-30T09:07:59.103316Z",
   "generator": "pub",
-  "generatorVersion": "3.1.0"
+  "generatorVersion": "3.3.4"
 }

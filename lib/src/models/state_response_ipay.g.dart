@@ -6,8 +6,9 @@ part of 'state_response_ipay.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_StateResponseIpay _$$_StateResponseIpayFromJson(Map<String, dynamic> json) =>
-    _$_StateResponseIpay(
+_$StateResponseIpayImpl _$$StateResponseIpayImplFromJson(
+        Map<String, dynamic> json) =>
+    _$StateResponseIpayImpl(
       reference: json['reference'] as String?,
       publicReference: json['public_reference'] as String?,
       state: json['state'] as String?,
@@ -17,8 +18,8 @@ _$_StateResponseIpay _$$_StateResponseIpayFromJson(Map<String, dynamic> json) =>
       notificationUrl: json['notification_url'] as String?,
     );
 
-Map<String, dynamic> _$$_StateResponseIpayToJson(
-        _$_StateResponseIpay instance) =>
+Map<String, dynamic> _$$StateResponseIpayImplToJson(
+        _$StateResponseIpayImpl instance) =>
     <String, dynamic>{
       'reference': instance.reference,
       'public_reference': instance.publicReference,

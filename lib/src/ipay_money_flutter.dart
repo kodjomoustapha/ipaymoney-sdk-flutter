@@ -67,7 +67,7 @@ class IpayPayments {
   ipayPayment(
       {required BuildContext context,
       required Function(String) callback}) async {
-    Payment payment = Payment(
+    final payment = Payment(
         cvv: cvv,
         pan: pan,
         exp: exp,
@@ -80,7 +80,7 @@ class IpayPayments {
         targetEnvironment: targetEnvironment,
         paymentType: paymentType,
         timeOut: timeOut,
-        referencePrefix: referencePrefix!.replaceAll(" ", ""));
+        referencePrefix: referencePrefix?.replaceAll(' ', ''));
     showDialog(
         context: context,
         builder: (_) => ProviderScope(
@@ -185,7 +185,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
   }
 
   _init() async {
-    final status = await _checkStatus(_payment, ref);
+    final status = await _checkStatus(_payment, ref, context);
     if (mounted) {
       setState(() {
         _transactionStatus = status!;
@@ -193,23 +193,18 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
     }
   }
 
-  var encode = json.encode({
-    "status": "failed",
-  });
   @override
   Widget build(BuildContext context) {
-    var encodeS = json.encode({
-      "status": "success",
-      "reference": widget.reference,
-      "public_reference": widget.publicReference,
-    });
-
     if (_transactionStatus == TransactionStatus.succeeded) {
       Timer.periodic(const Duration(seconds: 2), (timerPop) {
         if (timerPop.tick == 2) {
           timerPop.cancel();
           if (mounted) {
-            widget.callback(encodeS);
+            widget.callback(json.encode({
+              "status": "success",
+              "reference": widget.reference,
+              "public_reference": widget.publicReference,
+            }));
             Navigator.pop(context);
           }
         }
@@ -219,15 +214,22 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
     return WillPopScope(
       onWillPop: () async {
         if (mounted) {
-          widget.callback(encode);
+          widget.callback(json.encode({
+            "status": "failed",
+          }));
           Navigator.pop(context);
         }
         return false;
       },
-      child: Scaffold(
-        body: SizedBox(
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height,
+      child: Container(
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -249,10 +251,13 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                                   fontSize: 20),
                               textAlign: TextAlign.center,
                             ),
-                            Icon(
-                              Icons.cancel_outlined,
-                              color: Colors.red,
-                              size: 50,
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.error_outline_outlined,
+                                color: Colors.red,
+                                size: 50,
+                              ),
                             )
                           ],
                         )
@@ -306,7 +311,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
               ),
               _transactionStatus == TransactionStatus.succeeded
                   ? const Icon(
-                      Icons.verified_rounded,
+                      Icons.check_circle_outlined,
                       color: Colors.green,
                       size: 30,
                     )
@@ -317,11 +322,16 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                           ),
                           onPressed: () {
                             if (mounted) {
-                              widget.callback(encode);
+                              widget.callback(json.encode({
+                                "status": "failed",
+                              }));
                               Navigator.pop(context);
                             }
                           },
-                          child: const Text('Retour'))
+                          child: const Text(
+                            'Retour',
+                            style: TextStyle(color: Colors.white),
+                          ))
                       : const CircularProgressIndicator(
                           color: Colors.green,
                         )
@@ -357,11 +367,6 @@ class _IpayVisaMasterCardState extends State<IpayVisaMasterCard> {
 
   @override
   void initState() {
-    var encode = json.encode({
-      "status": "success",
-      "reference": widget.reference,
-      "public_reference": widget.publicReference,
-    });
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
@@ -373,7 +378,11 @@ class _IpayVisaMasterCardState extends State<IpayVisaMasterCard> {
               await Future.delayed(const Duration(seconds: 3));
 
               if (mounted) {
-                widget.callback(encode);
+                widget.callback(json.encode({
+                  "status": "success",
+                  "reference": widget.reference,
+                  "public_reference": widget.publicReference,
+                }));
                 Navigator.pop(context);
               }
             }
@@ -396,12 +405,14 @@ class _IpayVisaMasterCardState extends State<IpayVisaMasterCard> {
   }
 }
 
-Future<TransactionStatus?> _checkStatus(Payment payment, WidgetRef ref) async {
+Future<TransactionStatus?> _checkStatus(
+    Payment payment, WidgetRef ref, BuildContext context) async {
   TransactionStatus? status;
   int timer = 0;
   await Future.delayed(const Duration(milliseconds: 100));
   await Future.doWhile(() async {
-    await Future.delayed(const Duration(seconds: 1));
+    if (!context.mounted) return false;
+    await Future.delayed(const Duration(milliseconds: 800));
     timer++;
     if (kDebugMode) {
       log('$timer');

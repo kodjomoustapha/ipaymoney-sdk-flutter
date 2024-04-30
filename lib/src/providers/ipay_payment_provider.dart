@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:ipay_money_flutter_sdk/src/models/payment.dart';
 import 'package:ipay_money_flutter_sdk/src/models/state_response_ipay.dart';
 import 'package:ipay_money_flutter_sdk/src/utils/utils.dart';
@@ -19,9 +20,8 @@ Future<dynamic> ipayPayment(
 }) async {
   var random = randomAlphaNumeric(20);
   var headers = {
-    'Ipay-Target-Environment':
-        convertEnumToString(payment!.targetEnvironment!).toString(),
-    'Ipay-Payment-Type': convertEnumToString(payment.paymentType!).toString(),
+    'Ipay-Target-Environment': convertEnumToString(payment!.targetEnvironment!),
+    'Ipay-Payment-Type': convertEnumToString(payment.paymentType!),
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ${payment.authorization}',
   };
@@ -30,41 +30,28 @@ Future<dynamic> ipayPayment(
       Uri.parse(payment.paymentType == PaymentType.card
           ? 'https://i-pay.money/api/v1/payments/bank_card_payment'
           : 'https://i-pay.money/api/v1/payments'));
-  request.body = payment.paymentType == PaymentType.card
-      ? json.encode({
-          "customer_name": payment.name,
-          "currency": "XOF",
-          "country":
-              convertEnumToString(payment.country!).toString().toUpperCase(),
-          "amount": payment.amount,
-          "transaction_id": "${payment.referencePrefix ?? "random"}-$random",
-          "msisdn": payment.country == Country.ne
-              ? '227${payment.msisdn}'
-              : '225${payment.msisdn}',
-          "payment_option": "card",
-          "pan": payment.pan,
-          "exp": payment.exp,
-          "cvv": payment.cvv
-        })
-      : json.encode({
-          "customer_name": payment.name,
-          "currency": "XOF",
-          "country":
-              convertEnumToString(payment.country!).toString().toUpperCase(),
-          "amount": payment.amount,
-          "transaction_id": "${payment.referencePrefix ?? "random"}-$random",
-          "msisdn": payment.targetEnvironment == TargetEnvironment.live
-              ? payment.country == Country.ne
-                  ? '227${payment.msisdn}'
-                  : '225${payment.msisdn}'
-              : payment.msisdn
-        });
+  request.body = json.encode({
+    "customer_name": payment.name,
+    "currency": "XOF",
+    "country": convertEnumToString(payment.country!).toUpperCase(),
+    "amount": payment.amount,
+    "transaction_id": "${payment.referencePrefix ?? "ipay"}-$random",
+    "msisdn": payment.country == Country.ne
+        ? '227${payment.msisdn}'
+        : '225${payment.msisdn}',
+    if (payment.paymentType == PaymentType.card) ...{
+      "payment_option": "card",
+      "pan": payment.pan,
+      "exp": payment.exp,
+      "cvv": payment.cvv
+    }
+  });
 
   request.headers.addAll(headers);
   http.StreamedResponse response = await request.send();
-
+  final res = await response.stream.bytesToString();
+  log(res);
   if (response.statusCode == 200) {
-    var res = await response.stream.bytesToString();
     return res;
   } else {
     return response.reasonPhrase;
@@ -118,9 +105,8 @@ Future<dynamic> paymentEnquiry(
   required Payment payment,
 }) async {
   var headers = {
-    'Ipay-Payment-Type': convertEnumToString(payment.paymentType).toString(),
-    'Ipay-Target-Environment':
-        convertEnumToString(payment.targetEnvironment).toString(),
+    'Ipay-Payment-Type': convertEnumToString(payment.paymentType),
+    'Ipay-Target-Environment': convertEnumToString(payment.targetEnvironment),
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ${payment.authorization}',
   };

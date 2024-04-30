@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ipay_money_flutter_sdk/ipay_money_flutter_sdk.dart';
 import 'package:ipay_money_flutter_sdk_example/widget/operator_logo.dart';
@@ -39,7 +40,11 @@ class _TestState extends State<Test> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('iPayMoney Sdk Test'),
+        backgroundColor: Theme.of(context).primaryColor,
+        title: const Text(
+          'iPayMoney Sdk Test',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -48,7 +53,7 @@ class _TestState extends State<Test> {
               padding: EdgeInsets.symmetric(vertical: 20),
               child: Text(
                 "Choisir un moyen de paiement",
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
               ),
             ),
             Row(
@@ -140,19 +145,20 @@ class _TestState extends State<Test> {
                               controller: _mycontrollerPan,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
+                                isDense: true,
                                 labelText: "Numéro de la carte",
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: const BorderSide(
-                                        color: Colors.grey, width: 1),
+                                        color: Colors.grey, width: 0.8),
                                     borderRadius: BorderRadius.circular(10)),
                                 focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey),
+                                    borderSide: const BorderSide(
+                                        color: Colors.grey, width: 0.8),
                                     borderRadius: BorderRadius.circular(10)),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey)),
+                                    borderSide: const BorderSide(
+                                        color: Colors.grey, width: 0.8)),
                               ),
                             ),
                             const SizedBox(
@@ -165,23 +171,24 @@ class _TestState extends State<Test> {
                                     controller: _mycontrollerExp,
                                     keyboardType: TextInputType.text,
                                     decoration: InputDecoration(
+                                      isDense: true,
                                       hintText: '--/--',
                                       labelText: "Date expiration",
                                       enabledBorder: OutlineInputBorder(
                                           borderSide: const BorderSide(
-                                              color: Colors.grey, width: 1),
+                                              color: Colors.grey, width: 0.8),
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                       focusedBorder: OutlineInputBorder(
                                           borderSide: const BorderSide(
-                                              color: Colors.grey),
+                                              color: Colors.grey, width: 0.8),
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                       border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           borderSide: const BorderSide(
-                                              color: Colors.grey)),
+                                              color: Colors.grey, width: 0.8)),
                                     ),
                                   ),
                                 ),
@@ -195,6 +202,7 @@ class _TestState extends State<Test> {
                                     maxLength: 3,
                                     obscureText: true,
                                     decoration: InputDecoration(
+                                      isDense: true,
                                       counterStyle: const TextStyle(
                                         height: double.minPositive,
                                       ),
@@ -202,19 +210,19 @@ class _TestState extends State<Test> {
                                       labelText: "Cvv",
                                       enabledBorder: OutlineInputBorder(
                                           borderSide: const BorderSide(
-                                              color: Colors.grey, width: 1),
+                                              color: Colors.grey, width: 0.8),
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                       focusedBorder: OutlineInputBorder(
                                           borderSide: const BorderSide(
-                                              color: Colors.grey),
+                                              color: Colors.grey, width: 0.8),
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                       border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           borderSide: const BorderSide(
-                                              color: Colors.grey)),
+                                              color: Colors.grey, width: 0.8)),
                                     ),
                                   ),
                                 )
@@ -222,7 +230,7 @@ class _TestState extends State<Test> {
                             )
                           ],
                         )
-                      : Container(),
+                      : const SizedBox.shrink(),
                   Column(
                     children: [
                       const SizedBox(
@@ -232,19 +240,20 @@ class _TestState extends State<Test> {
                         controller: _mycontrollerName,
                         keyboardType: TextInputType.name,
                         decoration: InputDecoration(
+                            isDense: true,
                             labelText: "Nom et prénom",
                             enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
-                                    color: Colors.grey, width: 1),
+                                    color: Colors.grey, width: 0.8),
                                 borderRadius: BorderRadius.circular(10)),
                             focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.grey),
+                                borderSide: const BorderSide(
+                                    color: Colors.grey, width: 0.8),
                                 borderRadius: BorderRadius.circular(10)),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    const BorderSide(color: Colors.grey))),
+                                borderSide: const BorderSide(
+                                    color: Colors.grey, width: 0.8))),
                       ),
                       const SizedBox(
                         height: 20,
@@ -254,28 +263,26 @@ class _TestState extends State<Test> {
                         keyboardType: TextInputType.number,
                         style: const TextStyle(),
                         decoration: InputDecoration(
+                            isDense: true,
                             prefixIcon: const Padding(
                               padding: EdgeInsets.only(top: 14, left: 7),
-                              child: Text(
-                                "+227",
-                                style: TextStyle(),
-                              ),
+                              child: Text("+227"),
                             ),
                             labelText: _isVisa
                                 ? "Numéro de téléphone"
                                 : "Numéro Mobile Money",
                             enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
-                                    color: Colors.grey, width: 1),
+                                    color: Colors.grey, width: 0.8),
                                 borderRadius: BorderRadius.circular(10)),
                             focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.grey),
+                                borderSide: const BorderSide(
+                                    color: Colors.grey, width: 0.8),
                                 borderRadius: BorderRadius.circular(10)),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    const BorderSide(color: Colors.grey))),
+                                borderSide: const BorderSide(
+                                    color: Colors.grey, width: 0.8))),
                       ),
                       const SizedBox(
                         height: 20,
@@ -284,17 +291,20 @@ class _TestState extends State<Test> {
                         controller: _mycontrollerAmount,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
+                          isDense: true,
                           labelText: "Montant",
                           enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                  color: Colors.grey, width: 1),
+                                  color: Colors.grey, width: 0.8),
                               borderRadius: BorderRadius.circular(10)),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.grey),
+                              borderSide: const BorderSide(
+                                  color: Colors.grey, width: 0.8),
                               borderRadius: BorderRadius.circular(10)),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(color: Colors.grey)),
+                              borderSide: const BorderSide(
+                                  color: Colors.grey, width: 0.8)),
                         ),
                       ),
                     ],
@@ -312,8 +322,7 @@ class _TestState extends State<Test> {
                           IpayPayments(
                             timeOut: 60,
                             amount: _mycontrollerAmount.text,
-                            authorization:
-                                'Your secret key',
+                            authorization: 'Your secret key',
                             country: Country.ne,
                             currency: 'XOF',
                             exp: _mycontrollerExp.text,
@@ -322,7 +331,6 @@ class _TestState extends State<Test> {
                             msisdn: _mycontrollerNumber.text,
                             name: _mycontrollerName.text,
                             targetEnvironment: TargetEnvironment.live,
-                            referencePrefix: "LoremIpsum",
                             paymentType: _isMobileMoney
                                 ? PaymentType.mobile
                                 : _isAlIzza
@@ -331,10 +339,9 @@ class _TestState extends State<Test> {
                           ).ipayPayment(
                               context: context,
                               callback: (callback) async {
-                                // log(callback.toString());
                                 if (jsonDecode(callback)['status'] ==
                                     'success') {
-                                  if (mounted) {
+                                  if (context.mounted) {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
                                       content: Text(
@@ -343,7 +350,9 @@ class _TestState extends State<Test> {
                                     ));
                                   }
                                 } else {
-                                  log(callback.toString());
+                                  if (kDebugMode) {
+                                    log(callback.toString());
+                                  }
                                 }
                               });
                         },

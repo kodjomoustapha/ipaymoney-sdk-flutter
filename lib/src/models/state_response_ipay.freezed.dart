@@ -12,7 +12,7 @@ part of 'state_response_ipay.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 StateResponseIpay _$StateResponseIpayFromJson(Map<String, dynamic> json) {
   return _StateResponseIpay.fromJson(json);
@@ -106,11 +106,11 @@ class _$StateResponseIpayCopyWithImpl<$Res, $Val extends StateResponseIpay>
 }
 
 /// @nodoc
-abstract class _$$_StateResponseIpayCopyWith<$Res>
+abstract class _$$StateResponseIpayImplCopyWith<$Res>
     implements $StateResponseIpayCopyWith<$Res> {
-  factory _$$_StateResponseIpayCopyWith(_$_StateResponseIpay value,
-          $Res Function(_$_StateResponseIpay) then) =
-      __$$_StateResponseIpayCopyWithImpl<$Res>;
+  factory _$$StateResponseIpayImplCopyWith(_$StateResponseIpayImpl value,
+          $Res Function(_$StateResponseIpayImpl) then) =
+      __$$StateResponseIpayImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -124,11 +124,11 @@ abstract class _$$_StateResponseIpayCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_StateResponseIpayCopyWithImpl<$Res>
-    extends _$StateResponseIpayCopyWithImpl<$Res, _$_StateResponseIpay>
-    implements _$$_StateResponseIpayCopyWith<$Res> {
-  __$$_StateResponseIpayCopyWithImpl(
-      _$_StateResponseIpay _value, $Res Function(_$_StateResponseIpay) _then)
+class __$$StateResponseIpayImplCopyWithImpl<$Res>
+    extends _$StateResponseIpayCopyWithImpl<$Res, _$StateResponseIpayImpl>
+    implements _$$StateResponseIpayImplCopyWith<$Res> {
+  __$$StateResponseIpayImplCopyWithImpl(_$StateResponseIpayImpl _value,
+      $Res Function(_$StateResponseIpayImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -142,7 +142,7 @@ class __$$_StateResponseIpayCopyWithImpl<$Res>
     Object? termUrlGet = freezed,
     Object? notificationUrl = freezed,
   }) {
-    return _then(_$_StateResponseIpay(
+    return _then(_$StateResponseIpayImpl(
       reference: freezed == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
@@ -178,8 +178,8 @@ class __$$_StateResponseIpayCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_StateResponseIpay implements _StateResponseIpay {
-  const _$_StateResponseIpay(
+class _$StateResponseIpayImpl implements _StateResponseIpay {
+  const _$StateResponseIpayImpl(
       {this.reference,
       this.publicReference,
       this.state,
@@ -188,8 +188,8 @@ class _$_StateResponseIpay implements _StateResponseIpay {
       this.termUrlGet,
       this.notificationUrl});
 
-  factory _$_StateResponseIpay.fromJson(Map<String, dynamic> json) =>
-      _$$_StateResponseIpayFromJson(json);
+  factory _$StateResponseIpayImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StateResponseIpayImplFromJson(json);
 
 // Define the properties of the `StateResponseIpay` class
   @override
@@ -213,10 +213,10 @@ class _$_StateResponseIpay implements _StateResponseIpay {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StateResponseIpay &&
+            other is _$StateResponseIpayImpl &&
             (identical(other.reference, reference) ||
                 other.reference == reference) &&
             (identical(other.publicReference, publicReference) ||
@@ -239,13 +239,13 @@ class _$_StateResponseIpay implements _StateResponseIpay {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StateResponseIpayCopyWith<_$_StateResponseIpay> get copyWith =>
-      __$$_StateResponseIpayCopyWithImpl<_$_StateResponseIpay>(
+  _$$StateResponseIpayImplCopyWith<_$StateResponseIpayImpl> get copyWith =>
+      __$$StateResponseIpayImplCopyWithImpl<_$StateResponseIpayImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StateResponseIpayToJson(
+    return _$$StateResponseIpayImplToJson(
       this,
     );
   }
@@ -259,10 +259,10 @@ abstract class _StateResponseIpay implements StateResponseIpay {
       final String? acsUrl,
       final String? base64EncodedCqeq,
       final String? termUrlGet,
-      final String? notificationUrl}) = _$_StateResponseIpay;
+      final String? notificationUrl}) = _$StateResponseIpayImpl;
 
   factory _StateResponseIpay.fromJson(Map<String, dynamic> json) =
-      _$_StateResponseIpay.fromJson;
+      _$StateResponseIpayImpl.fromJson;
 
   @override // Define the properties of the `StateResponseIpay` class
   String? get reference;
@@ -280,6 +280,6 @@ abstract class _StateResponseIpay implements StateResponseIpay {
   String? get notificationUrl;
   @override
   @JsonKey(ignore: true)
-  _$$_StateResponseIpayCopyWith<_$_StateResponseIpay> get copyWith =>
+  _$$StateResponseIpayImplCopyWith<_$StateResponseIpayImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

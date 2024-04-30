@@ -10,7 +10,7 @@ class OperatorLogo extends StatelessWidget {
       borderRadius: BorderRadius.circular(5),
       child: Image.asset(
         imgUrl,
-        height: 25,
+        height: 28,
       ),
     );
   }

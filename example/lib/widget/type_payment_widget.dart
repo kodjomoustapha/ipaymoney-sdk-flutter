@@ -74,11 +74,11 @@ class PaymentTypeWidget extends StatelessWidget {
             ),
             if (isTapMobileMoney || isTapVisa || isTapAlIzza)
               const Positioned(
-                left: 71,
+                left: 80,
                 child: CircleAvatar(
-                  radius: 8,
+                  radius: 13,
                   child: Padding(
-                      padding: EdgeInsets.all(3.5), child: Icon(Icons.check)),
+                      padding: EdgeInsets.all(3.5), child: Icon(Icons.check,size: 17,)),
                 ),
               ),
           ],
