@@ -26,7 +26,7 @@ import 'package:ipay_money_flutter_sdk/ipay_money_flutter_sdk.dart';
 IpayPayments(
 timeOut: 10,
 amount: '100',
-authorization: 'XXXXXXXXXXXXXXXXXXXXXXX',
+authorization: 'Your secret key',
 country: Country.ne,
 currency: 'XOF',
 exp: '01/10',
@@ -68,7 +68,7 @@ if (mounted) {
 IpayPayments(
 timeOut: 10,
 amount: '100',
-authorization: 'XXXXXXXXXXXXXXXXXXXXXXX',
+authorization: 'Your secret key',
 country: Country.ne,
 msisdn: '90XXXXXX',
 name: 'John Doe',
@@ -106,7 +106,7 @@ if (mounted) {
 IpayPayments(
 timeOut: 10,
 amount: '100',
-authorization: 'XXXXXXXXXXXXXXXXXXXXXXX',
+authorization: 'Your secret key',
 country: Country.ne,
 currency: 'XOF',
 msisdn: '90XXXXXX',
