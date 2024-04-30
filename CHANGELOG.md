@@ -1,3 +1,8 @@
+## 0.0.29
+- Upgrade packages
+- Minor fix
+- Rearrange UI
+
 ## 0.0.28
 
 - Fix Visa/MasterCard payment error
