@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:ipay_money_flutter_sdk/src/models/payment.dart';
 import 'package:ipay_money_flutter_sdk/src/models/state_response_ipay.dart';
 import 'package:ipay_money_flutter_sdk/src/utils/utils.dart';
@@ -50,7 +49,6 @@ Future<dynamic> ipayPayment(
   request.headers.addAll(headers);
   http.StreamedResponse response = await request.send();
   final res = await response.stream.bytesToString();
-  log(res);
   if (response.statusCode == 200) {
     return res;
   } else {
