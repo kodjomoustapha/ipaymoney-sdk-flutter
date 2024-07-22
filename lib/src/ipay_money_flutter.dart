@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
@@ -47,7 +49,7 @@ class IpayPayments {
   String pan;
 
   ///The reference sufix that let you track the type of the transaction.
-  String? referencePrefix;
+  String referencePrefix;
 
   IpayPayments(
       {required this.amount,
@@ -62,11 +64,11 @@ class IpayPayments {
       this.cvv = '',
       this.exp = '',
       this.pan = '',
-      this.referencePrefix});
+      this.referencePrefix = 'ipay'});
 
   ipayPayment(
       {required BuildContext context,
-      required Function(String) callback}) async {
+      required void Function(String) callback}) async {
     final payment = Payment(
         cvv: cvv,
         pan: pan,
@@ -80,7 +82,9 @@ class IpayPayments {
         targetEnvironment: targetEnvironment,
         paymentType: paymentType,
         timeOut: timeOut,
-        referencePrefix: referencePrefix?.replaceAll(' ', ''));
+        referencePrefix: referencePrefix
+            .replaceAll(' ', '')
+            .replaceAll(RegExp(r'[^a-zA-Z0-9 .()\-\s]'), '-'));
     showDialog(
         context: context,
         builder: (_) => ProviderScope(
@@ -158,7 +162,7 @@ class IpayConsumer extends ConsumerStatefulWidget {
   final String reference;
   final Payment payment;
   final String publicReference;
-  final Function(String) callback;
+  final void Function(String) callback;
   const IpayConsumer(
       {required this.payment,
       required this.publicReference,
@@ -184,7 +188,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
     super.initState();
   }
 
-  _init() async {
+  Future<void> _init() async {
     final status = await _checkStatus(_payment, ref, context);
     if (mounted) {
       setState(() {
@@ -348,7 +352,7 @@ class IpayVisaMasterCard extends StatefulWidget {
   final String reference;
   final Payment payment;
   final String publicReference;
-  final Function(String) callback;
+  final void Function(String) callback;
   const IpayVisaMasterCard({
     required this.callback,
     super.key,

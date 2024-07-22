@@ -34,7 +34,7 @@ Future<dynamic> ipayPayment(
     "currency": "XOF",
     "country": convertEnumToString(payment.country!).toUpperCase(),
     "amount": payment.amount,
-    "transaction_id": "${payment.referencePrefix ?? "ipay"}-$random",
+    "transaction_id": "${payment.referencePrefix}-$random",
     "msisdn": payment.country == Country.ne
         ? '227${payment.msisdn}'
         : '225${payment.msisdn}',
@@ -52,7 +52,7 @@ Future<dynamic> ipayPayment(
   if (response.statusCode == 200) {
     return res;
   } else {
-    return response.reasonPhrase;
+    throw response.reasonPhrase.toString();
   }
 }
 
@@ -89,7 +89,7 @@ Future<dynamic> ipayVisaMasterCardPayment(IpayVisaMasterCardPaymentRef ref,
     var stateResponse = StateResponseIpay.fromJson(statusOk);
     return stateResponse;
   } else {
-    return response.reasonPhrase;
+    throw response.reasonPhrase.toString();
   }
 }
 
@@ -119,6 +119,6 @@ Future<dynamic> paymentEnquiry(
   if (response.statusCode == 200) {
     return await response.stream.bytesToString();
   } else {
-    return response.reasonPhrase;
+    throw response.reasonPhrase.toString();
   }
 }
