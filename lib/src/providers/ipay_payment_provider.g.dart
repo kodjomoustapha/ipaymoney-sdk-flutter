@@ -6,7 +6,7 @@ part of 'ipay_payment_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$ipayPaymentHash() => r'59ff36d23a53866c752b50d575a83c49df593ac3';
+String _$ipayPaymentHash() => r'fef2f59fdc7f0deb77af96110e67def4d0263be3';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -46,7 +46,7 @@ const ipayPaymentProvider = IpayPaymentFamily();
 /// Otherwise, it returns the response's reason phrase.
 ///
 /// Copied from [ipayPayment].
-class IpayPaymentFamily extends Family<AsyncValue<dynamic>> {
+class IpayPaymentFamily extends Family<AsyncValue<String>> {
   /// Define a FutureProvider that can be used to make a direct payment
   /// Sends a POST request to the API to initiate a payment. The request body contains
   /// information about the payment, such as the amount, the customer's name, and the payment method.
@@ -102,7 +102,7 @@ class IpayPaymentFamily extends Family<AsyncValue<dynamic>> {
 /// Otherwise, it returns the response's reason phrase.
 ///
 /// Copied from [ipayPayment].
-class IpayPaymentProvider extends AutoDisposeFutureProvider<dynamic> {
+class IpayPaymentProvider extends AutoDisposeFutureProvider<String> {
   /// Define a FutureProvider that can be used to make a direct payment
   /// Sends a POST request to the API to initiate a payment. The request body contains
   /// information about the payment, such as the amount, the customer's name, and the payment method.
@@ -143,7 +143,7 @@ class IpayPaymentProvider extends AutoDisposeFutureProvider<dynamic> {
 
   @override
   Override overrideWith(
-    FutureOr<dynamic> Function(IpayPaymentRef provider) create,
+    FutureOr<String> Function(IpayPaymentRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -160,7 +160,7 @@ class IpayPaymentProvider extends AutoDisposeFutureProvider<dynamic> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<dynamic> createElement() {
+  AutoDisposeFutureProviderElement<String> createElement() {
     return _IpayPaymentProviderElement(this);
   }
 
@@ -178,13 +178,13 @@ class IpayPaymentProvider extends AutoDisposeFutureProvider<dynamic> {
   }
 }
 
-mixin IpayPaymentRef on AutoDisposeFutureProviderRef<dynamic> {
+mixin IpayPaymentRef on AutoDisposeFutureProviderRef<String> {
   /// The parameter `payment` of this provider.
   Payment? get payment;
 }
 
 class _IpayPaymentProviderElement
-    extends AutoDisposeFutureProviderElement<dynamic> with IpayPaymentRef {
+    extends AutoDisposeFutureProviderElement<String> with IpayPaymentRef {
   _IpayPaymentProviderElement(super.provider);
 
   @override
@@ -192,38 +192,18 @@ class _IpayPaymentProviderElement
 }
 
 String _$ipayVisaMasterCardPaymentHash() =>
-    r'f0e181e00ab5dda63a7f2131acd1fad4073762e0';
+    r'ebee0a537ad111bad96b14840e502f4c30612ee5';
 
-/// Define a FutureProvider that can be used to make a Visa or MasterCard payment
-/// Sends a POST request to the API to send_device_information . If the request
-/// is successful, it returns the response body as a [StateResponseIpay]. Otherwise, it returns
-/// the response's reason phrase.
-///
-/// Copied from [ipayVisaMasterCardPayment].
+/// See also [ipayVisaMasterCardPayment].
 @ProviderFor(ipayVisaMasterCardPayment)
 const ipayVisaMasterCardPaymentProvider = IpayVisaMasterCardPaymentFamily();
 
-/// Define a FutureProvider that can be used to make a Visa or MasterCard payment
-/// Sends a POST request to the API to send_device_information . If the request
-/// is successful, it returns the response body as a [StateResponseIpay]. Otherwise, it returns
-/// the response's reason phrase.
-///
-/// Copied from [ipayVisaMasterCardPayment].
-class IpayVisaMasterCardPaymentFamily extends Family<AsyncValue<dynamic>> {
-  /// Define a FutureProvider that can be used to make a Visa or MasterCard payment
-  /// Sends a POST request to the API to send_device_information . If the request
-  /// is successful, it returns the response body as a [StateResponseIpay]. Otherwise, it returns
-  /// the response's reason phrase.
-  ///
-  /// Copied from [ipayVisaMasterCardPayment].
+/// See also [ipayVisaMasterCardPayment].
+class IpayVisaMasterCardPaymentFamily extends Family<AsyncValue<String>> {
+  /// See also [ipayVisaMasterCardPayment].
   const IpayVisaMasterCardPaymentFamily();
 
-  /// Define a FutureProvider that can be used to make a Visa or MasterCard payment
-  /// Sends a POST request to the API to send_device_information . If the request
-  /// is successful, it returns the response body as a [StateResponseIpay]. Otherwise, it returns
-  /// the response's reason phrase.
-  ///
-  /// Copied from [ipayVisaMasterCardPayment].
+  /// See also [ipayVisaMasterCardPayment].
   IpayVisaMasterCardPaymentProvider call({
     required String authorization,
     required String orderReference,
@@ -265,20 +245,10 @@ class IpayVisaMasterCardPaymentFamily extends Family<AsyncValue<dynamic>> {
   String? get name => r'ipayVisaMasterCardPaymentProvider';
 }
 
-/// Define a FutureProvider that can be used to make a Visa or MasterCard payment
-/// Sends a POST request to the API to send_device_information . If the request
-/// is successful, it returns the response body as a [StateResponseIpay]. Otherwise, it returns
-/// the response's reason phrase.
-///
-/// Copied from [ipayVisaMasterCardPayment].
+/// See also [ipayVisaMasterCardPayment].
 class IpayVisaMasterCardPaymentProvider
-    extends AutoDisposeFutureProvider<dynamic> {
-  /// Define a FutureProvider that can be used to make a Visa or MasterCard payment
-  /// Sends a POST request to the API to send_device_information . If the request
-  /// is successful, it returns the response body as a [StateResponseIpay]. Otherwise, it returns
-  /// the response's reason phrase.
-  ///
-  /// Copied from [ipayVisaMasterCardPayment].
+    extends AutoDisposeFutureProvider<String> {
+  /// See also [ipayVisaMasterCardPayment].
   IpayVisaMasterCardPaymentProvider({
     required String authorization,
     required String orderReference,
@@ -327,7 +297,7 @@ class IpayVisaMasterCardPaymentProvider
 
   @override
   Override overrideWith(
-    FutureOr<dynamic> Function(IpayVisaMasterCardPaymentRef provider) create,
+    FutureOr<String> Function(IpayVisaMasterCardPaymentRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -347,7 +317,7 @@ class IpayVisaMasterCardPaymentProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<dynamic> createElement() {
+  AutoDisposeFutureProviderElement<String> createElement() {
     return _IpayVisaMasterCardPaymentProviderElement(this);
   }
 
@@ -372,7 +342,7 @@ class IpayVisaMasterCardPaymentProvider
   }
 }
 
-mixin IpayVisaMasterCardPaymentRef on AutoDisposeFutureProviderRef<dynamic> {
+mixin IpayVisaMasterCardPaymentRef on AutoDisposeFutureProviderRef<String> {
   /// The parameter `authorization` of this provider.
   String get authorization;
 
@@ -387,7 +357,7 @@ mixin IpayVisaMasterCardPaymentRef on AutoDisposeFutureProviderRef<dynamic> {
 }
 
 class _IpayVisaMasterCardPaymentProviderElement
-    extends AutoDisposeFutureProviderElement<dynamic>
+    extends AutoDisposeFutureProviderElement<String>
     with IpayVisaMasterCardPaymentRef {
   _IpayVisaMasterCardPaymentProviderElement(super.provider);
 
@@ -405,7 +375,7 @@ class _IpayVisaMasterCardPaymentProviderElement
       (origin as IpayVisaMasterCardPaymentProvider).paymentReference;
 }
 
-String _$paymentEnquiryHash() => r'8ef9337d5c36468e7b72709f868f73b7190cf053';
+String _$paymentEnquiryHash() => r'cce9e97c4615e812e6745fc3c952377789dfa038';
 
 /// Define a FutureProvider that can be used for paymentEnquiry request
 /// Sends a GET request to the API to retrieve information about the payment specified
@@ -422,7 +392,7 @@ const paymentEnquiryProvider = PaymentEnquiryFamily();
 /// it returns the response body as a string. Otherwise, it returns the response's reason phrase.
 ///
 /// Copied from [paymentEnquiry].
-class PaymentEnquiryFamily extends Family<AsyncValue<dynamic>> {
+class PaymentEnquiryFamily extends Family<AsyncValue<String>> {
   /// Define a FutureProvider that can be used for paymentEnquiry request
   /// Sends a GET request to the API to retrieve information about the payment specified
   /// by the reference property of the Payment object. If the request is successful,
@@ -475,7 +445,7 @@ class PaymentEnquiryFamily extends Family<AsyncValue<dynamic>> {
 /// it returns the response body as a string. Otherwise, it returns the response's reason phrase.
 ///
 /// Copied from [paymentEnquiry].
-class PaymentEnquiryProvider extends AutoDisposeFutureProvider<dynamic> {
+class PaymentEnquiryProvider extends AutoDisposeFutureProvider<String> {
   /// Define a FutureProvider that can be used for paymentEnquiry request
   /// Sends a GET request to the API to retrieve information about the payment specified
   /// by the reference property of the Payment object. If the request is successful,
@@ -515,7 +485,7 @@ class PaymentEnquiryProvider extends AutoDisposeFutureProvider<dynamic> {
 
   @override
   Override overrideWith(
-    FutureOr<dynamic> Function(PaymentEnquiryRef provider) create,
+    FutureOr<String> Function(PaymentEnquiryRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -532,7 +502,7 @@ class PaymentEnquiryProvider extends AutoDisposeFutureProvider<dynamic> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<dynamic> createElement() {
+  AutoDisposeFutureProviderElement<String> createElement() {
     return _PaymentEnquiryProviderElement(this);
   }
 
@@ -550,13 +520,13 @@ class PaymentEnquiryProvider extends AutoDisposeFutureProvider<dynamic> {
   }
 }
 
-mixin PaymentEnquiryRef on AutoDisposeFutureProviderRef<dynamic> {
+mixin PaymentEnquiryRef on AutoDisposeFutureProviderRef<String> {
   /// The parameter `payment` of this provider.
   Payment get payment;
 }
 
 class _PaymentEnquiryProviderElement
-    extends AutoDisposeFutureProviderElement<dynamic> with PaymentEnquiryRef {
+    extends AutoDisposeFutureProviderElement<String> with PaymentEnquiryRef {
   _PaymentEnquiryProviderElement(super.provider);
 
   @override

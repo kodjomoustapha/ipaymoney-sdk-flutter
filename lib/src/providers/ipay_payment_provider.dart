@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:ipay_money_flutter_sdk/src/models/payment.dart';
-import 'package:ipay_money_flutter_sdk/src/models/state_response_ipay.dart';
 import 'package:ipay_money_flutter_sdk/src/utils/utils.dart';
 import 'package:random_string/random_string.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -13,7 +12,7 @@ part 'ipay_payment_provider.g.dart';
 /// If the request is successful, it returns the response body as a string.
 /// Otherwise, it returns the response's reason phrase.
 @riverpod
-Future<dynamic> ipayPayment(
+Future<String> ipayPayment(
   IpayPaymentRef ref, {
   required Payment? payment,
 }) async {
@@ -27,8 +26,8 @@ Future<dynamic> ipayPayment(
   var request = http.Request(
       'POST',
       Uri.parse(payment.paymentType == PaymentType.card
-          ? 'https://i-pay.money/api/v1/payments/bank_card_payment'
-          : 'https://i-pay.money/api/v1/payments'));
+          ? '$_apiBaseUrl/payments/bank_card_payment'
+          : '$_apiBaseUrl/payments'));
   request.body = json.encode({
     "customer_name": payment.name,
     "currency": "XOF",
@@ -48,20 +47,19 @@ Future<dynamic> ipayPayment(
 
   request.headers.addAll(headers);
   http.StreamedResponse response = await request.send();
-  final res = await response.stream.bytesToString();
   if (response.statusCode == 200) {
+    final res = await response.stream.bytesToString();
+    logger("ipayPayment(statusCode == 200) : $res");
     return res;
   } else {
-    throw response.reasonPhrase.toString();
+    final reason = response.reasonPhrase;
+    logger("ipayPayment(statusCode != 200) : $reason");
+    throw reason!;
   }
 }
 
-/// Define a FutureProvider that can be used to make a Visa or MasterCard payment
-/// Sends a POST request to the API to send_device_information . If the request
-/// is successful, it returns the response body as a [StateResponseIpay]. Otherwise, it returns
-/// the response's reason phrase.
 @riverpod
-Future<dynamic> ipayVisaMasterCardPayment(IpayVisaMasterCardPaymentRef ref,
+Future<String> ipayVisaMasterCardPayment(IpayVisaMasterCardPaymentRef ref,
     {required String authorization,
     required String orderReference,
     required String reference,
@@ -72,8 +70,8 @@ Future<dynamic> ipayVisaMasterCardPayment(IpayVisaMasterCardPaymentRef ref,
     'Authorization': 'Bearer $authorization',
     'Content-Type': 'application/json',
   };
-  var request = http.Request('POST',
-      Uri.parse('https://i-pay.money/api/v1/payments/send_device_information'));
+  var request = http.Request(
+      'POST', Uri.parse('$_apiBaseUrl/payments/send_device_information'));
   request.body = json.encode({
     "reference": reference,
     "order_reference": orderReference,
@@ -84,12 +82,16 @@ Future<dynamic> ipayVisaMasterCardPayment(IpayVisaMasterCardPaymentRef ref,
   http.StreamedResponse response = await request.send();
 
   if (response.statusCode == 200) {
-    var statusOk = jsonDecode(await response.stream.bytesToString())
+    var res = jsonDecode(await response.stream.bytesToString())
         as Map<String, dynamic>;
-    var stateResponse = StateResponseIpay.fromJson(statusOk);
-    return stateResponse;
+    final url =
+        '${res['term_url_get']}?acs_url=${res['acs_url']}&base64_encoded_cqeq=${res['base64_encoded_cqeq']}&challenge_notification_url=${res['notification_url']}';
+    logger("ipayVisaMasterCardPayment(statusCode == 200) : $url");
+    return url;
   } else {
-    throw response.reasonPhrase.toString();
+    final reason = response.reasonPhrase;
+    logger("ipayVisaMasterCardPayment(statusCode != 200) : $reason");
+    throw reason!;
   }
 }
 
@@ -98,7 +100,7 @@ Future<dynamic> ipayVisaMasterCardPayment(IpayVisaMasterCardPaymentRef ref,
 /// by the reference property of the Payment object. If the request is successful,
 /// it returns the response body as a string. Otherwise, it returns the response's reason phrase.
 @riverpod
-Future<dynamic> paymentEnquiry(
+Future<String> paymentEnquiry(
   PaymentEnquiryRef ref, {
   required Payment payment,
 }) async {
@@ -108,8 +110,8 @@ Future<dynamic> paymentEnquiry(
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ${payment.authorization}',
   };
-  var request = http.Request('GET',
-      Uri.parse('https://i-pay.money/api/v1/payments/${payment.reference}'));
+  var request = http.Request(
+      'GET', Uri.parse('$_apiBaseUrl/payments/${payment.reference}'));
   request.body = json.encode({"reference": payment.reference});
 
   request.headers.addAll(headers);
@@ -117,8 +119,14 @@ Future<dynamic> paymentEnquiry(
   http.StreamedResponse response = await request.send();
 
   if (response.statusCode == 200) {
-    return await response.stream.bytesToString();
+    final res = await response.stream.bytesToString();
+    logger("paymentEnquiry(statusCode == 200) : $res");
+    return res;
   } else {
-    throw response.reasonPhrase.toString();
+    final reason = response.reasonPhrase;
+    logger("paymentEnquiry(statusCode != 200) : $reason");
+    throw reason!;
   }
 }
+
+const _apiBaseUrl = 'https://i-pay.money/api/v1';

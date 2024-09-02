@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:ipay_money_flutter_sdk/src/models/payment.dart';
 
 String convertEnumToString(dynamic o) =>
@@ -11,5 +13,11 @@ TransactionStatus getTransactionStatusEnum(String transactionStatus) {
       return TransactionStatus.pending;
     default:
       return TransactionStatus.succeeded;
+  }
+}
+
+void logger(String message) {
+  if (kDebugMode) {
+    log(message);
   }
 }

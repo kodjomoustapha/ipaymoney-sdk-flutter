@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -66,7 +65,7 @@ class IpayPayments {
       this.pan = '',
       this.referencePrefix = 'ipay'});
 
-  ipayPayment(
+  Future<void> ipayPayment(
       {required BuildContext context,
       required void Function(String) callback}) async {
     final payment = Payment(
@@ -85,73 +84,73 @@ class IpayPayments {
         referencePrefix: referencePrefix
             .replaceAll(' ', '')
             .replaceAll(RegExp(r'[^a-zA-Z0-9 .()\-\s]'), '-'));
-    showDialog(
+    await showModalBottomSheet(
+        enableDrag: false,
+        elevation: 5,
+        isDismissible: false,
+        backgroundColor: Colors.transparent,
         context: context,
         builder: (_) => ProviderScope(
               child: Consumer(builder: (context, ref, child) {
                 final startPayment =
-                    ref.watch(ipayPaymentProvider(payment: payment).future);
-                startPayment.then((value) {
-                  if (value != null) {
+                    ref.watch(ipayPaymentProvider(payment: payment));
+
+                return startPayment.when(
+                  data: (value) {
                     var val = jsonDecode(value);
                     if (payment.paymentType == PaymentType.card) {
                       if (val['state'] == 'AWAIT_3DS') {
-                        ref
-                            .watch(ipayVisaMasterCardPaymentProvider(
-                                    authorization: payment.authorization!,
-                                    orderReference: val['order_reference'],
-                                    reference: val['reference'],
-                                    paymentReference: val['payment_reference'])
-                                .future)
-                            .then((value) {
-                          Navigator.pop(context);
-                          var url =
-                              '${value.termUrlGet}?acs_url=${value.acsUrl}&base64_encoded_cqeq=${value.base64EncodedCqeq}&challenge_notification_url=${value.notificationUrl}';
-                          showDialog(
-                              context: context,
-                              builder: (_) => ProviderScope(
-                                    child: IpayVisaMasterCard(
-                                      payment: payment,
-                                      reference: val['reference'],
-                                      publicReference: val['public_reference'],
-                                      url: url,
-                                      callback: callback,
-                                    ),
-                                  ));
-                        });
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    } else {
-                      if (val['status'] == 'succeeded') {
-                        Navigator.pop(context);
-                        showModalBottomSheet(
-                            enableDrag: false,
-                            elevation: 5,
-                            isDismissible: false,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return ProviderScope(
-                                  child: IpayConsumer(
-                                callback: callback,
+                        final cardPayment = ref.watch(
+                            ipayVisaMasterCardPaymentProvider(
+                                authorization: payment.authorization!,
+                                orderReference: val['order_reference'],
+                                reference: val['reference'],
+                                paymentReference: val['payment_reference']));
+
+                        cardPayment.when(
+                            data: (url) {
+                              return IpayVisaMasterCard(
                                 payment: payment,
                                 reference: val['reference'],
                                 publicReference: val['public_reference'],
-                              ));
-                            });
+                                url: url,
+                                callback: callback,
+                              );
+                            },
+                            error: (error, stackTrace) {
+                              return _noConnectionWidgetPlus(context, () {
+                                ref.invalidate(
+                                    ipayVisaMasterCardPaymentProvider);
+                              });
+                            },
+                            loading: () => const Scaffold(
+                                  backgroundColor: Colors.transparent,
+                                  body: Center(
+                                      child: CircularProgressIndicator(
+                                    color: Colors.green,
+                                  )),
+                                ));
+                      } else {
+                        Navigator.pop(context);
                       }
                     }
-                  } else {
-                    Navigator.pop(context);
-                  }
-                });
-                return const Scaffold(
-                  backgroundColor: Colors.transparent,
-                  body: Center(
-                      child: CircularProgressIndicator(
-                    color: Colors.green,
-                  )),
+                    return IpayConsumer(
+                      callback: callback,
+                      payment: payment,
+                      reference: val['reference'],
+                      publicReference: val['public_reference'],
+                    );
+                  },
+                  error: (error, stackTrace) {
+                    return _noConnectionWidgetPlus(context, () {
+                      ref.invalidate(ipayPaymentProvider);
+                    });
+                  },
+                  loading: () => const Column(
+                    children: [
+                      CircularProgressIndicator(color: Colors.green),
+                    ],
+                  ),
                 );
               }),
             ));
@@ -265,54 +264,55 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                             )
                           ],
                         )
-                      : Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Transaction en cours....",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 22),
-                                textAlign: TextAlign.center),
-                            if (_payment.paymentType == PaymentType.mobile)
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                      'Veuillez valider le push que vous avez reçu sur votre téléphone...',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 17),
-                                      textAlign: TextAlign.center),
-                                ],
-                              ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            if (_payment.paymentType == PaymentType.alizza)
-                              const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                    'Veuillez vous rendre dans un centre AL IZZA et fournir ce code:',
+                      : _transactionStatus == TransactionStatus.connectionError
+                          ? _noConnectionWidget()
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("Transaction en cours....",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 17),
+                                        fontSize: 22),
                                     textAlign: TextAlign.center),
-                              ),
-                            if (_payment.paymentType == PaymentType.alizza)
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(widget.publicReference,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 25),
-                                    textAlign: TextAlign.center),
-                              ),
-                          ],
-                        ),
-              const SizedBox(
-                height: 20,
-              ),
+                                if (_payment.paymentType == PaymentType.mobile)
+                                  const Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Text(
+                                          'Veuillez valider le push que vous avez reçu sur votre téléphone...',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 17),
+                                          textAlign: TextAlign.center),
+                                    ],
+                                  ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                if (_payment.paymentType == PaymentType.alizza)
+                                  const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                        'Veuillez vous rendre dans un centre AL IZZA et fournir ce code:',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 17),
+                                        textAlign: TextAlign.center),
+                                  ),
+                                if (_payment.paymentType == PaymentType.alizza)
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(widget.publicReference,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 25),
+                                        textAlign: TextAlign.center),
+                                  ),
+                              ],
+                            ),
+              const SizedBox(height: 20),
               _transactionStatus == TransactionStatus.succeeded
                   ? const Icon(
                       Icons.check_circle_outlined,
@@ -336,9 +336,23 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                             'Retour',
                             style: TextStyle(color: Colors.white),
                           ))
-                      : const CircularProgressIndicator(
-                          color: Colors.green,
-                        )
+                      : _transactionStatus == TransactionStatus.connectionError
+                          ? ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _transactionStatus =
+                                      TransactionStatus.pending;
+                                });
+                                _init();
+                              },
+                              child: const Text('Réessayer',
+                                  style: TextStyle(color: Colors.white)))
+                          : const CircularProgressIndicator(
+                              color: Colors.green,
+                            )
             ],
           ),
         ),
@@ -419,19 +433,16 @@ Future<TransactionStatus?> _checkStatus(
     await Future.delayed(const Duration(milliseconds: 800));
     timer++;
     if (kDebugMode) {
-      log('$timer');
+      logger('_checkStatus timer : $timer');
     }
     try {
-      final result = await ref
-          .read(paymentEnquiryProvider(payment: payment).future)
-          .onError((error, stackTrace) {
-        status = TransactionStatus.failed;
-      });
+      final result =
+          await ref.read(paymentEnquiryProvider(payment: payment).future);
 
       final value = jsonDecode(result);
 
       if (kDebugMode) {
-        log(value['status']);
+        logger('_checkStatus status : ${value['status']}');
       }
       status = getTransactionStatusEnum(value['status']!.toLowerCase());
 
@@ -442,10 +453,63 @@ Future<TransactionStatus?> _checkStatus(
         return false;
       }
     } catch (_) {
-      status = TransactionStatus.failed;
+      status = TransactionStatus.connectionError;
       return false;
     }
     return true;
   });
   return status;
+}
+
+Widget _noConnectionWidget() {
+  return const Column(
+    children: [
+      Text(
+        'Connexion internet non disponible ou instable veuillez réessayer.',
+        style: TextStyle(
+            color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20),
+        textAlign: TextAlign.center,
+      ),
+      Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Icon(Icons.signal_cellular_connected_no_internet_4_bar,
+            color: Colors.red, size: 50),
+      )
+    ],
+  );
+}
+
+Widget _noConnectionWidgetPlus(
+    BuildContext context, void Function()? onPressed) {
+  return Scaffold(
+      body: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      _noConnectionWidget(),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
+                onPressed: onPressed,
+                child: const Text('Réessayer',
+                    style: TextStyle(color: Colors.white))),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Retour',
+                    style: TextStyle(color: Colors.white))),
+          ],
+        ),
+      )
+    ],
+  ));
 }

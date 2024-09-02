@@ -34,7 +34,9 @@ mixin _$Payment {
   TargetEnvironment? get targetEnvironment =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Payment
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PaymentCopyWith<Payment> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -71,6 +73,8 @@ class _$PaymentCopyWithImpl<$Res, $Val extends Payment>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Payment
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -188,6 +192,8 @@ class __$$PaymentImplCopyWithImpl<$Res>
       _$PaymentImpl _value, $Res Function(_$PaymentImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Payment
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -377,7 +383,9 @@ class _$PaymentImpl implements _Payment {
       referencePrefix,
       targetEnvironment);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Payment
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PaymentImplCopyWith<_$PaymentImpl> get copyWith =>
@@ -402,7 +410,8 @@ abstract class _Payment implements Payment {
       final String? referencePrefix,
       final TargetEnvironment? targetEnvironment}) = _$PaymentImpl;
 
-  @override // Define the properties of the `Payment` class
+// Define the properties of the `Payment` class
+  @override
   String? get publicReference;
   @override
   String? get reference;
@@ -432,8 +441,11 @@ abstract class _Payment implements Payment {
   String? get referencePrefix;
   @override
   TargetEnvironment? get targetEnvironment;
+
+  /// Create a copy of Payment
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PaymentImplCopyWith<_$PaymentImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -69,6 +69,10 @@ class _TestState extends State<Test> {
                     Padding(
                       padding: EdgeInsets.all(5),
                       child: OperatorLogo(imgUrl: "assets/moov.jpeg"),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5),
+                      child: OperatorLogo(imgUrl: "assets/zamani.png"),
                     )
                   ],
                   label: "Mobile Money",
@@ -82,6 +86,7 @@ class _TestState extends State<Test> {
                   },
                   isTapVisa: false,
                   isTapAlIzza: false,
+                  width: 140,
                 ),
                 PaymentTypeWidget(
                   list: const [
@@ -101,6 +106,7 @@ class _TestState extends State<Test> {
                   },
                   isTapVisa: false,
                   isTapAlIzza: _isAlIzza,
+                  width: 50,
                 ),
                 Column(
                   children: [
@@ -126,6 +132,7 @@ class _TestState extends State<Test> {
                       },
                       isTapMobileMoney: false,
                       isTapAlIzza: false,
+                      width: 100,
                     ),
                   ],
                 )
@@ -322,7 +329,8 @@ class _TestState extends State<Test> {
                           IpayPayments(
                             timeOut: 60,
                             amount: _mycontrollerAmount.text,
-                            authorization: 'Your secret key',
+                            authorization:
+                                'sk_1f3e3f0772af4b5f8fc4406cf0dc5011',
                             country: Country.ne,
                             currency: 'XOF',
                             exp: _mycontrollerExp.text,
