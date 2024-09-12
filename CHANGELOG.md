@@ -1,3 +1,6 @@
+## 0.0.32
+- Fix Visa/Mastercard payment not working
+
 ## 0.0.31
 - Upgrade packages
 
