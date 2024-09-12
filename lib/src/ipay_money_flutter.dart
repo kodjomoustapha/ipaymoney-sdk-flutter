@@ -84,76 +84,83 @@ class IpayPayments {
         referencePrefix: referencePrefix
             .replaceAll(' ', '')
             .replaceAll(RegExp(r'[^a-zA-Z0-9 .()\-\s]'), '-'));
-    await showModalBottomSheet(
-        enableDrag: false,
-        elevation: 5,
-        isDismissible: false,
-        backgroundColor: Colors.transparent,
-        context: context,
-        builder: (_) => ProviderScope(
-              child: Consumer(builder: (context, ref, child) {
-                final startPayment =
-                    ref.watch(ipayPaymentProvider(payment: payment));
+    final isCardPayment = payment.paymentType == PaymentType.card;
+    final paymentWidget = ProviderScope(
+      child: Consumer(builder: (context, ref, child) {
+        final startPayment = ref.watch(ipayPaymentProvider(payment: payment));
 
-                return startPayment.when(
-                  data: (value) {
-                    var val = jsonDecode(value);
-                    if (payment.paymentType == PaymentType.card) {
-                      if (val['state'] == 'AWAIT_3DS') {
-                        final cardPayment = ref.watch(
-                            ipayVisaMasterCardPaymentProvider(
-                                authorization: payment.authorization!,
-                                orderReference: val['order_reference'],
-                                reference: val['reference'],
-                                paymentReference: val['payment_reference']));
+        return startPayment.when(
+          data: (value) {
+            var val = jsonDecode(value);
+            if (isCardPayment) {
+              if (val['state'] == 'AWAIT_3DS') {
+                final cardPayment = ref.watch(ipayVisaMasterCardPaymentProvider(
+                    authorization: payment.authorization!,
+                    orderReference: val['order_reference'],
+                    reference: val['reference'],
+                    paymentReference: val['payment_reference']));
 
-                        cardPayment.when(
-                            data: (url) {
-                              return IpayVisaMasterCard(
-                                payment: payment,
-                                reference: val['reference'],
-                                publicReference: val['public_reference'],
-                                url: url,
-                                callback: callback,
-                              );
-                            },
-                            error: (error, stackTrace) {
-                              return _noConnectionWidgetPlus(context, () {
-                                ref.invalidate(
-                                    ipayVisaMasterCardPaymentProvider);
-                              });
-                            },
-                            loading: () => const Scaffold(
-                                  backgroundColor: Colors.transparent,
-                                  body: Center(
-                                      child: CircularProgressIndicator(
-                                    color: Colors.green,
-                                  )),
-                                ));
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    }
-                    return IpayConsumer(
-                      callback: callback,
-                      payment: payment,
-                      reference: val['reference'],
-                      publicReference: val['public_reference'],
-                    );
-                  },
-                  error: (error, stackTrace) {
-                    return _noConnectionWidgetPlus(context, () {
-                      ref.invalidate(ipayPaymentProvider);
-                    });
-                  },
-                  loading: () => const Column(
-                    children: [
-                      CircularProgressIndicator(color: Colors.green),
-                    ],
-                  ),
-                );
-              }),
-            ));
+                return cardPayment.when(
+                    data: (url) {
+                      return IpayVisaMasterCard(
+                        payment: payment,
+                        reference: val['reference'],
+                        publicReference: val['public_reference'],
+                        url: url,
+                        callback: callback,
+                      );
+                    },
+                    error: (error, stackTrace) {
+                      return _noConnectionWidgetPlus(context, () {
+                        ref.invalidate(ipayVisaMasterCardPaymentProvider);
+                      });
+                    },
+                    loading: () => const Scaffold(
+                          backgroundColor: Colors.transparent,
+                          body: Center(
+                              child: CircularProgressIndicator(
+                            color: Colors.green,
+                          )),
+                        ));
+              } else {
+                Navigator.pop(context);
+              }
+            }
+
+            return IpayConsumer(
+              callback: callback,
+              payment: payment,
+              reference: val['reference'],
+              publicReference: val['public_reference'],
+            );
+          },
+          error: (error, stackTrace) {
+            return _noConnectionWidgetPlus(context, () {
+              ref.invalidate(ipayPaymentProvider);
+            });
+          },
+          loading: () => Column(
+            mainAxisAlignment: isCardPayment
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.start,
+            children: const [
+              CircularProgressIndicator(color: Colors.green),
+            ],
+          ),
+        );
+      }),
+    );
+    if (isCardPayment) {
+      await showDialog(context: context, builder: (_) => paymentWidget);
+    } else {
+      await showModalBottomSheet(
+          enableDrag: false,
+          elevation: 5,
+          isDismissible: false,
+          backgroundColor: Colors.transparent,
+          context: context,
+          builder: (_) => paymentWidget);
+    }
   }
 }
 
