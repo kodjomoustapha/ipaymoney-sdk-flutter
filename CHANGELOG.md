@@ -1,3 +1,6 @@
+## 0.0.40
+- Add AmanaTa & BOA payment method
+
 ## 0.0.32
 - Fix Visa/Mastercard payment not working
 
