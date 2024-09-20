@@ -170,9 +170,11 @@ if (mounted) {
 
 | Value   | Description              |
 | :------ |:------------------------:|
-| mobile  | Payment by mobile phone. |
+| mobile  | Payment by mobile money. |
 | alizza  | Payment by Alizza.       |
 | card    | Payment by credit card.  |
+| amanata | Payment by Amanata.      |
+| boa     | Payment by BOA.          |
 
 
 ### The TargetEnvironment enumeration:
