@@ -1,4 +1,4 @@
-## 0.0.40
+## 0.0.33
 - Add AmanaTa & BOA payment method
 
 ## 0.0.32
