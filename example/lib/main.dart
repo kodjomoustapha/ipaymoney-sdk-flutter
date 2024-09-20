@@ -3,8 +3,7 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ipay_money_flutter_sdk/ipay_money_flutter_sdk.dart';
-import 'package:ipay_money_flutter_sdk_example/widget/operator_logo.dart';
-import 'package:ipay_money_flutter_sdk_example/widget/type_payment_widget.dart';
+import 'package:ipay_money_flutter_sdk_example/widget/payment_option_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,9 +32,8 @@ class _TestState extends State<Test> {
   final TextEditingController _mycontrollerCvv = TextEditingController();
   final TextEditingController _mycontrollerExp = TextEditingController();
   final TextEditingController _mycontrollerPan = TextEditingController();
-  bool _isMobileMoney = true;
-  bool _isVisa = false;
-  bool _isAlIzza = false;
+  PaymentType _paymentType = PaymentType.mobile;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,87 +54,86 @@ class _TestState extends State<Test> {
                 style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                PaymentTypeWidget(
-                  list: const [
-                    Padding(
-                      padding: EdgeInsets.all(5),
-                      child: OperatorLogo(imgUrl: "assets/airtel.png"),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(5),
-                      child: OperatorLogo(imgUrl: "assets/moov.jpeg"),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(5),
-                      child: OperatorLogo(imgUrl: "assets/zamani.png"),
-                    )
-                  ],
-                  label: "Mobile Money",
-                  isTapMobileMoney: _isMobileMoney,
-                  onTap: () {
-                    setState(() {
-                      _isVisa = false;
-                      _isMobileMoney = true;
-                      _isAlIzza = false;
-                    });
-                  },
-                  isTapVisa: false,
-                  isTapAlIzza: false,
-                  width: 140,
-                ),
-                PaymentTypeWidget(
-                  list: const [
-                    Padding(
-                      padding: EdgeInsets.all(5),
-                      child: OperatorLogo(imgUrl: "assets/alizza.png"),
-                    )
-                  ],
-                  label: "AlIzza",
-                  isTapMobileMoney: false,
-                  onTap: () {
-                    setState(() {
-                      _isVisa = false;
-                      _isMobileMoney = false;
-                      _isAlIzza = true;
-                    });
-                  },
-                  isTapVisa: false,
-                  isTapAlIzza: _isAlIzza,
-                  width: 50,
-                ),
-                Column(
-                  children: [
-                    PaymentTypeWidget(
-                      list: const [
-                        Padding(
-                          padding: EdgeInsets.all(5),
-                          child: OperatorLogo(imgUrl: "assets/mastercard.png"),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(5),
-                          child: OperatorLogo(imgUrl: "assets/visa.png"),
-                        ),
-                      ],
-                      label: "Carte Bancaire",
-                      isTapVisa: _isVisa,
-                      onTap: () {
-                        setState(() {
-                          _isVisa = true;
-                          _isMobileMoney = false;
-                          _isAlIzza = false;
-                        });
-                      },
-                      isTapMobileMoney: false,
-                      isTapAlIzza: false,
-                      width: 100,
-                    ),
-                  ],
-                )
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      PaymentOptionWidget(
+                        assets: const [
+                          "assets/airtel.jpeg",
+                          "assets/mtn.png",
+                          "assets/moov-africa.jpeg",
+                          "assets/zamani-cash.png"
+                        ],
+                        label: "Mobile Money",
+                        onTap: () {
+                          setState(() {
+                            _paymentType = PaymentType.mobile;
+                          });
+                        },
+                        selected: _paymentType == PaymentType.mobile,
+                        width: 140,
+                      ),
+                      PaymentOptionWidget(
+                        assets: const [
+                          "assets/mastercard.jpg",
+                          "assets/visa.png"
+                        ],
+                        label: "Carte Bancaire",
+                        onTap: () {
+                          setState(() {
+                            _paymentType = PaymentType.card;
+                          });
+                        },
+                        selected: _paymentType == PaymentType.card,
+                        width: 130,
+                      ),
+                      PaymentOptionWidget(
+                        assets: const ["assets/boa.png"],
+                        label: "Boa",
+                        onTap: () {
+                          setState(() {
+                            _paymentType = PaymentType.boa;
+                          });
+                        },
+                        selected: _paymentType == PaymentType.boa,
+                        width: 65,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      PaymentOptionWidget(
+                        assets: const ["assets/alizza.png"],
+                        label: "AlIzza money",
+                        onTap: () {
+                          setState(() {
+                            _paymentType = PaymentType.alizza;
+                          });
+                        },
+                        selected: _paymentType == PaymentType.alizza,
+                        width: 110,
+                      ),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                      PaymentOptionWidget(
+                        assets: const ["assets/amanata.png"],
+                        label: "AmanaTa",
+                        onTap: () {
+                          setState(() {
+                            _paymentType = PaymentType.amanata;
+                          });
+                        },
+                        selected: _paymentType == PaymentType.amanata,
+                        width: 85,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -145,7 +142,7 @@ class _TestState extends State<Test> {
                   const SizedBox(
                     height: 20,
                   ),
-                  _isVisa
+                  _paymentType == PaymentType.card
                       ? Column(
                           children: [
                             TextFormField(
@@ -275,7 +272,7 @@ class _TestState extends State<Test> {
                               padding: EdgeInsets.only(top: 14, left: 7),
                               child: Text("+227"),
                             ),
-                            labelText: _isVisa
+                            labelText: _paymentType != PaymentType.mobile
                                 ? "Numéro de téléphone"
                                 : "Numéro Mobile Money",
                             enabledBorder: OutlineInputBorder(
@@ -329,8 +326,7 @@ class _TestState extends State<Test> {
                           IpayPayments(
                             timeOut: 60,
                             amount: _mycontrollerAmount.text,
-                            authorization:
-                                'Your secret key',
+                            authorization: 'Your secret key',
                             country: Country.ne,
                             currency: 'XOF',
                             exp: _mycontrollerExp.text,
@@ -338,12 +334,8 @@ class _TestState extends State<Test> {
                             cvv: _mycontrollerCvv.text,
                             msisdn: _mycontrollerNumber.text,
                             name: _mycontrollerName.text,
-                            targetEnvironment: TargetEnvironment.sandbox,
-                            paymentType: _isMobileMoney
-                                ? PaymentType.mobile
-                                : _isAlIzza
-                                    ? PaymentType.alizza
-                                    : PaymentType.card,
+                            targetEnvironment: TargetEnvironment.live,
+                            paymentType: _paymentType,
                           ).ipayPayment(
                               context: context,
                               callback: (callback) async {

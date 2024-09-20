@@ -111,7 +111,7 @@ class IpayPayments {
                       );
                     },
                     error: (error, stackTrace) {
-                      return _noConnectionWidgetPlus(context, () {
+                      return _noConnectionWidgetPlus(context, error, () {
                         ref.invalidate(ipayVisaMasterCardPaymentProvider);
                       });
                     },
@@ -119,7 +119,7 @@ class IpayPayments {
                           backgroundColor: Colors.transparent,
                           body: Center(
                               child: CircularProgressIndicator(
-                            color: Colors.green,
+                            color: primaryColor,
                           )),
                         ));
               } else {
@@ -135,7 +135,7 @@ class IpayPayments {
             );
           },
           error: (error, stackTrace) {
-            return _noConnectionWidgetPlus(context, () {
+            return _noConnectionWidgetPlus(context, error, () {
               ref.invalidate(ipayPaymentProvider);
             });
           },
@@ -144,7 +144,7 @@ class IpayPayments {
                 ? MainAxisAlignment.center
                 : MainAxisAlignment.start,
             children: const [
-              CircularProgressIndicator(color: Colors.green),
+              CircularProgressIndicator(color: primaryColor),
             ],
           ),
         );
@@ -241,125 +241,165 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _transactionStatus == TransactionStatus.succeeded
-                  ? const Text('Paiement effectuer avec succès',
-                      style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 20),
-                      textAlign: TextAlign.center)
-                  : _transactionStatus == TransactionStatus.failed
-                      ? const Column(
-                          children: [
-                            Text(
-                              'La transaction a échouée.\nVeuillez reprendre le paiement',
-                              style: TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20),
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.error_outline_outlined,
-                                color: Colors.red,
-                                size: 50,
-                              ),
-                            )
-                          ],
-                        )
-                      : _transactionStatus == TransactionStatus.connectionError
-                          ? _noConnectionWidget()
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text("Transaction en cours....",
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _transactionStatus == TransactionStatus.succeeded
+                        ? const Text('Paiement effectuer avec succès',
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20),
+                            textAlign: TextAlign.center)
+                        : _transactionStatus == TransactionStatus.failed
+                            ? const Column(
+                                children: [
+                                  Text(
+                                    'La transaction a échouée.\nVeuillez reprendre le paiement',
                                     style: TextStyle(
+                                        color: Colors.red,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 22),
-                                    textAlign: TextAlign.center),
-                                if (_payment.paymentType == PaymentType.mobile)
-                                  const Column(
+                                        fontSize: 20),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      Icons.error_outline_outlined,
+                                      color: Colors.red,
+                                      size: 50,
+                                    ),
+                                  )
+                                ],
+                              )
+                            : _transactionStatus ==
+                                    TransactionStatus.connectionError
+                                ? _noConnectionWidget()
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      Text(
-                                          'Veuillez valider le push que vous avez reçu sur votre téléphone...',
+                                      const Text("Transaction en cours....",
                                           style: TextStyle(
                                               fontWeight: FontWeight.w500,
-                                              fontSize: 17),
+                                              fontSize: 22),
                                           textAlign: TextAlign.center),
+                                      if (_payment.paymentType ==
+                                          PaymentType.amanata)
+                                        const Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Text(
+                                                'Veuillez vous connectez sur votre Compte Amanata pour Valider la Transaction...',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 17),
+                                                textAlign: TextAlign.center),
+                                          ],
+                                        ),
+                                      if (_payment.paymentType ==
+                                          PaymentType.mobile)
+                                        const Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Text(
+                                                'Veuillez valider le push que vous avez reçu sur votre téléphone...',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 17),
+                                                textAlign: TextAlign.center),
+                                          ],
+                                        ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      if (_payment.paymentType ==
+                                          PaymentType.alizza)
+                                        const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                              'Veuillez vous rendre dans un centre AL IZZA pour fournir ce code:',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 17),
+                                              textAlign: TextAlign.center),
+                                        ),
+                                      if (_payment.paymentType ==
+                                          PaymentType.boa)
+                                        const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                              'Veuillez vous rendre dans un centre BOA pour fournir ce code:',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 17),
+                                              textAlign: TextAlign.center),
+                                        ),
+                                      if (_payment.paymentType ==
+                                              PaymentType.alizza ||
+                                          _payment.paymentType ==
+                                              PaymentType.boa)
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(widget.publicReference,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 25),
+                                              textAlign: TextAlign.center),
+                                        ),
                                     ],
                                   ),
-                                const SizedBox(
-                                  height: 20,
+                    const SizedBox(height: 20),
+                    _transactionStatus == TransactionStatus.succeeded
+                        ? const Icon(
+                            Icons.check_circle_outlined,
+                            color: primaryColor,
+                            size: 30,
+                          )
+                        : _transactionStatus == TransactionStatus.failed
+                            ? ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: primaryColor,
                                 ),
-                                if (_payment.paymentType == PaymentType.alizza)
-                                  const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                        'Veuillez vous rendre dans un centre AL IZZA et fournir ce code:',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 17),
-                                        textAlign: TextAlign.center),
+                                onPressed: () {
+                                  if (mounted) {
+                                    widget.callback(json.encode({
+                                      "status": "failed",
+                                    }));
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                child: const Text(
+                                  'Retour',
+                                  style: TextStyle(color: Colors.white),
+                                ))
+                            : _transactionStatus ==
+                                    TransactionStatus.connectionError
+                                ? ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: primaryColor,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _transactionStatus =
+                                            TransactionStatus.pending;
+                                      });
+                                      _init();
+                                    },
+                                    child: const Text('Réessayer',
+                                        style: TextStyle(color: Colors.white)))
+                                : const CircularProgressIndicator(
+                                    color: primaryColor,
                                   ),
-                                if (_payment.paymentType == PaymentType.alizza)
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(widget.publicReference,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 25),
-                                        textAlign: TextAlign.center),
-                                  ),
-                              ],
-                            ),
-              const SizedBox(height: 20),
-              _transactionStatus == TransactionStatus.succeeded
-                  ? const Icon(
-                      Icons.check_circle_outlined,
-                      color: Colors.green,
-                      size: 30,
-                    )
-                  : _transactionStatus == TransactionStatus.failed
-                      ? ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
-                          ),
-                          onPressed: () {
-                            if (mounted) {
-                              widget.callback(json.encode({
-                                "status": "failed",
-                              }));
-                              Navigator.pop(context);
-                            }
-                          },
-                          child: const Text(
-                            'Retour',
-                            style: TextStyle(color: Colors.white),
-                          ))
-                      : _transactionStatus == TransactionStatus.connectionError
-                          ? ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _transactionStatus =
-                                      TransactionStatus.pending;
-                                });
-                                _init();
-                              },
-                              child: const Text('Réessayer',
-                                  style: TextStyle(color: Colors.white)))
-                          : const CircularProgressIndicator(
-                              color: Colors.green,
-                            )
+                  ],
+                ),
+              ),
+              const IpayCertificationFlag()
             ],
           ),
         ),
@@ -453,7 +493,8 @@ Future<TransactionStatus?> _checkStatus(
       }
       status = getTransactionStatusEnum(value['status']!.toLowerCase());
 
-      if (status != TransactionStatus.pending) {
+      if (status != TransactionStatus.pending &&
+          status != TransactionStatus.initiated) {
         return false;
       } else if (timer == payment.timeOut) {
         status = TransactionStatus.failed;
@@ -468,16 +509,17 @@ Future<TransactionStatus?> _checkStatus(
   return status;
 }
 
-Widget _noConnectionWidget() {
-  return const Column(
+Widget _noConnectionWidget({String? message}) {
+  return Column(
     children: [
       Text(
-        'Connexion internet non disponible ou instable veuillez réessayer.',
-        style: TextStyle(
+        message ??
+            'Connexion internet non disponible ou instable veuillez réessayer.',
+        style: const TextStyle(
             color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20),
         textAlign: TextAlign.center,
       ),
-      Padding(
+      const Padding(
         padding: EdgeInsets.all(8.0),
         child: Icon(Icons.signal_cellular_connected_no_internet_4_bar,
             color: Colors.red, size: 50),
@@ -487,12 +529,15 @@ Widget _noConnectionWidget() {
 }
 
 Widget _noConnectionWidgetPlus(
-    BuildContext context, void Function()? onPressed) {
+    BuildContext context, Object error, void Function()? onPressed) {
   return Scaffold(
       body: Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      _noConnectionWidget(),
+      if (error is ArgumentError) ...[
+        _noConnectionWidget(message: error.message.toString())
+      ] else
+        _noConnectionWidget(),
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -500,7 +545,7 @@ Widget _noConnectionWidgetPlus(
           children: [
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: primaryColor,
                 ),
                 onPressed: onPressed,
                 child: const Text('Réessayer',
@@ -519,4 +564,26 @@ Widget _noConnectionWidgetPlus(
       )
     ],
   ));
+}
+
+class IpayCertificationFlag extends StatelessWidget {
+  const IpayCertificationFlag({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text("Paiement sécurisé par", style: TextStyle(fontSize: 9)),
+          const SizedBox(width: 10),
+          Image.memory(base64Decode(ipayLogoBase64), height: 23),
+          const SizedBox(width: 4),
+          const Icon(Icons.lock, color: primaryColor, size: 15),
+          Image.memory(base64Decode(pcidssLogoBase64), height: 23),
+        ],
+      ),
+    );
+  }
 }

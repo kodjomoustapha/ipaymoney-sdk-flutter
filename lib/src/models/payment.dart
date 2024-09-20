@@ -28,10 +28,16 @@ class Payment with _$Payment {
 enum Country { ne, bj }
 
 // Define the `PaymentType` enum
-enum PaymentType { mobile, alizza, card }
+enum PaymentType { mobile, alizza, card, amanata, boa }
 
 // Define the `TargetEnvironment` enum
 enum TargetEnvironment { live, sandbox }
 
 // Define the `TransactionStatus` enum
-enum TransactionStatus { succeeded, failed, pending, connectionError }
+enum TransactionStatus {
+  succeeded,
+  failed,
+  pending,
+  initiated,
+  connectionError
+}

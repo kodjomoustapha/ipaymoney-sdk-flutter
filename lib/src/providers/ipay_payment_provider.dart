@@ -19,7 +19,7 @@ Future<String> ipayPayment(
   var random = randomAlphaNumeric(20);
   var headers = {
     'Ipay-Target-Environment': convertEnumToString(payment!.targetEnvironment!),
-    'Ipay-Payment-Type': convertEnumToString(payment.paymentType!),
+    'Ipay-Payment-Type': ipayPaymentType(payment.paymentType!),
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ${payment.authorization}',
   };
@@ -37,6 +37,7 @@ Future<String> ipayPayment(
     "msisdn": payment.country == Country.ne
         ? '227${payment.msisdn}'
         : '225${payment.msisdn}',
+    if (payment.paymentType == PaymentType.boa) ...{"payment_option": "sta"},
     if (payment.paymentType == PaymentType.card) ...{
       "payment_option": "card",
       "pan": payment.pan,
@@ -47,14 +48,13 @@ Future<String> ipayPayment(
 
   request.headers.addAll(headers);
   http.StreamedResponse response = await request.send();
+  final res = await response.stream.bytesToString();
   if (response.statusCode == 200) {
-    final res = await response.stream.bytesToString();
     logger("ipayPayment(statusCode == 200) : $res");
     return res;
   } else {
-    final reason = response.reasonPhrase;
-    logger("ipayPayment(statusCode != 200) : $reason");
-    throw reason!;
+    logger("ipayPayment(statusCode : ${response.statusCode}) :  $res");
+    throw ArgumentError(jsonDecode(res)["message"], response.reasonPhrase!);
   }
 }
 
@@ -80,18 +80,17 @@ Future<String> ipayVisaMasterCardPayment(IpayVisaMasterCardPaymentRef ref,
   request.headers.addAll(headers);
 
   http.StreamedResponse response = await request.send();
-
+  var res = await response.stream.bytesToString();
   if (response.statusCode == 200) {
-    var res = jsonDecode(await response.stream.bytesToString())
-        as Map<String, dynamic>;
+    final resJson = jsonDecode(res) as Map<String, dynamic>;
     final url =
-        '${res['term_url_get']}?acs_url=${res['acs_url']}&base64_encoded_cqeq=${res['base64_encoded_cqeq']}&challenge_notification_url=${res['notification_url']}';
+        '${resJson['term_url_get']}?acs_url=${resJson['acs_url']}&base64_encoded_cqeq=${resJson['base64_encoded_cqeq']}&challenge_notification_url=${resJson['notification_url']}';
     logger("ipayVisaMasterCardPayment(statusCode == 200) : $url");
     return url;
   } else {
-    final reason = response.reasonPhrase;
-    logger("ipayVisaMasterCardPayment(statusCode != 200) : $reason");
-    throw reason!;
+    logger(
+        "ipayVisaMasterCardPayment(statusCode : ${response.statusCode}) : $res");
+    throw ArgumentError(jsonDecode(res)["message"], response.reasonPhrase!);
   }
 }
 
@@ -105,7 +104,7 @@ Future<String> paymentEnquiry(
   required Payment payment,
 }) async {
   var headers = {
-    'Ipay-Payment-Type': convertEnumToString(payment.paymentType),
+    'Ipay-Payment-Type': ipayPaymentType(payment.paymentType!),
     'Ipay-Target-Environment': convertEnumToString(payment.targetEnvironment),
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ${payment.authorization}',
@@ -117,15 +116,22 @@ Future<String> paymentEnquiry(
   request.headers.addAll(headers);
 
   http.StreamedResponse response = await request.send();
-
+  final res = await response.stream.bytesToString();
   if (response.statusCode == 200) {
-    final res = await response.stream.bytesToString();
     logger("paymentEnquiry(statusCode == 200) : $res");
     return res;
   } else {
-    final reason = response.reasonPhrase;
-    logger("paymentEnquiry(statusCode != 200) : $reason");
-    throw reason!;
+    logger("paymentEnquiry(statusCode : ${response.statusCode}) : $res");
+    throw ArgumentError(jsonDecode(res)["message"], response.reasonPhrase!);
+  }
+}
+
+String ipayPaymentType(PaymentType paymentType) {
+  switch (paymentType) {
+    case PaymentType.boa:
+      return "sta";
+    default:
+      return convertEnumToString(paymentType);
   }
 }
 
