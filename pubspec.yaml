@@ -25,5 +25,5 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^2.0.1
   freezed: ^2.5.2
-  build_runner: ^2.4.11
-  riverpod_generator: ^2.4.2
+  build_runner: ^2.4.12
+  riverpod_generator: ^2.4.3

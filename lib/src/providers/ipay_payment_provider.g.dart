@@ -6,7 +6,7 @@ part of 'ipay_payment_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$ipayPaymentHash() => r'9a8ddef07de6a6f789706821a9bd05d0be875f43';
+String _$ipayPaymentHash() => r'31c8870c186946b18aa71a86433a6332669c3416';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -192,7 +192,7 @@ class _IpayPaymentProviderElement
 }
 
 String _$ipayVisaMasterCardPaymentHash() =>
-    r'3632ecaf1d31db59e6e2b4366207d810b1813c23';
+    r'6b53ef7fed8871d7a81a83405d3c3611b7270810';
 
 /// See also [ipayVisaMasterCardPayment].
 @ProviderFor(ipayVisaMasterCardPayment)
@@ -375,7 +375,7 @@ class _IpayVisaMasterCardPaymentProviderElement
       (origin as IpayVisaMasterCardPaymentProvider).paymentReference;
 }
 
-String _$paymentEnquiryHash() => r'a2d4b89225061723811f557b3b83b9d62142038e';
+String _$paymentEnquiryHash() => r'b2a90d1a1f6362ecbbad1ee65fc56a7ba002ac9a';
 
 /// Define a FutureProvider that can be used for paymentEnquiry request
 /// Sends a GET request to the API to retrieve information about the payment specified
