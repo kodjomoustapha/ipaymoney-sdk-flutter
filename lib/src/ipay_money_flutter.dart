@@ -266,11 +266,8 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                                   ),
                                   Padding(
                                     padding: EdgeInsets.all(8.0),
-                                    child: Icon(
-                                      Icons.error_outline_outlined,
-                                      color: Colors.red,
-                                      size: 50,
-                                    ),
+                                    child: Icon(Icons.warning_amber_rounded,
+                                        color: Colors.red, size: 70),
                                   )
                                 ],
                               )
@@ -295,26 +292,61 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                                             Text(
                                                 'Veuillez vous connectez sur votre Compte Amanata pour Valider la Transaction...',
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
+                                                    fontWeight: FontWeight.w300,
                                                     fontSize: 17),
                                                 textAlign: TextAlign.center),
                                           ],
                                         ),
                                       if (_payment.paymentType ==
-                                          PaymentType.mobile)
-                                        const Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            Text(
-                                                'Veuillez valider le push que vous avez reçu sur votre téléphone...',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 17),
-                                                textAlign: TextAlign.center),
-                                          ],
-                                        ),
+                                          PaymentType.mobile) ...[
+                                        if (widget.payment.country ==
+                                                Country.ne &&
+                                            zamani2FirstNumbersList.any((e) =>
+                                                widget.payment.msisdn!
+                                                    .startsWith(e))) ...[
+                                          const Column(
+                                            children: [
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Text.rich(
+                                                  TextSpan(children: [
+                                                    TextSpan(text: "Taper "),
+                                                    TextSpan(
+                                                      text: "#146# ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 17),
+                                                    ),
+                                                    TextSpan(
+                                                        text:
+                                                            "pour valider la transaction")
+                                                  ]),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                      fontSize: 17),
+                                                  textAlign: TextAlign.center)
+                                            ],
+                                          ),
+                                        ] else ...[
+                                          const Column(
+                                            children: [
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Text(
+                                                  'Veuillez valider le push que vous avez reçu sur votre téléphone...',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                      fontSize: 17),
+                                                  textAlign: TextAlign.center),
+                                            ],
+                                          ),
+                                        ]
+                                      ],
                                       const SizedBox(
                                         height: 20,
                                       ),
@@ -325,7 +357,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                                           child: Text(
                                               'Veuillez vous rendre dans un centre AL IZZA pour fournir ce code:',
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: FontWeight.w300,
                                                   fontSize: 17),
                                               textAlign: TextAlign.center),
                                         ),
@@ -336,7 +368,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                                           child: Text(
                                               'Veuillez vous rendre dans un centre BOA pour fournir ce code:',
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: FontWeight.w300,
                                                   fontSize: 17),
                                               textAlign: TextAlign.center),
                                         ),
@@ -352,6 +384,8 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                                                   fontSize: 25),
                                               textAlign: TextAlign.center),
                                         ),
+                                      Image.memory(base64Decode(phoneImgBase64),
+                                          height: 110),
                                     ],
                                   ),
                     const SizedBox(height: 20),
