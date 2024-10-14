@@ -177,7 +177,7 @@ class IpayConsumer extends ConsumerStatefulWidget {
       super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _IpayConsumerState();
+  ConsumerState<IpayConsumer> createState() => _IpayConsumerState();
 }
 
 class _IpayConsumerState extends ConsumerState<IpayConsumer> {
@@ -442,7 +442,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
   }
 }
 
-class IpayVisaMasterCard extends StatefulWidget {
+class IpayVisaMasterCard extends ConsumerStatefulWidget {
   final String url;
   final String reference;
   final Payment payment;
@@ -458,12 +458,17 @@ class IpayVisaMasterCard extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => _IpayVisaMasterCardState();
+  ConsumerState<IpayVisaMasterCard> createState() => _IpayVisaMasterCardState();
 }
 
-class _IpayVisaMasterCardState extends State<IpayVisaMasterCard> {
+class _IpayVisaMasterCardState extends ConsumerState<IpayVisaMasterCard> {
   late WebViewController _controller;
-
+  late final Payment _payment = Payment(
+      timeOut: widget.payment.timeOut,
+      targetEnvironment: widget.payment.targetEnvironment,
+      paymentType: widget.payment.paymentType,
+      authorization: widget.payment.authorization,
+      reference: widget.reference);
   @override
   void initState() {
     _controller = WebViewController()
@@ -474,15 +479,16 @@ class _IpayVisaMasterCardState extends State<IpayVisaMasterCard> {
           onPageFinished: (data) async {
             if (data.startsWith(
                 'https://i-pay.money/api/sdk/v1/emv_challenges?reference=${widget.reference}')) {
-              await Future.delayed(const Duration(seconds: 3));
-
-              if (mounted) {
-                widget.callback(json.encode({
-                  "status": "success",
-                  "reference": widget.reference,
-                  "public_reference": widget.publicReference,
-                }));
-                Navigator.pop(context);
+              final status = await _checkStatus(_payment, ref, context);
+              if (status == TransactionStatus.succeeded) {
+                if (mounted) {
+                  widget.callback(json.encode({
+                    "status": "success",
+                    "reference": widget.reference,
+                    "public_reference": widget.publicReference,
+                  }));
+                  Navigator.pop(context);
+                }
               }
             }
           },
@@ -508,6 +514,7 @@ Future<TransactionStatus?> _checkStatus(
     Payment payment, WidgetRef ref, BuildContext context) async {
   TransactionStatus? status;
   int timer = 0;
+  int retry = 0;
   await Future.delayed(const Duration(milliseconds: 100));
   await Future.doWhile(() async {
     if (!context.mounted) return false;
@@ -535,8 +542,13 @@ Future<TransactionStatus?> _checkStatus(
         return false;
       }
     } catch (_) {
-      status = TransactionStatus.connectionError;
-      return false;
+      if (retry >= 3) {
+        status = TransactionStatus.connectionError;
+        return false;
+      } else {
+        retry++;
+        return true;
+      }
     }
     return true;
   });
