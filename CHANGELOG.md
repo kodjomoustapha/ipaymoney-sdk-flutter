@@ -1,3 +1,7 @@
+## 0.0.34
+- Upgrade packages
+- Some improvements
+
 ## 0.0.33
 - Add AmanaTa & BOA payment method
 
