@@ -1,3 +1,6 @@
+## 0.0.35
+- Upgrade dependencies
+
 ## 0.0.34
 - Upgrade packages
 - Some improvements
