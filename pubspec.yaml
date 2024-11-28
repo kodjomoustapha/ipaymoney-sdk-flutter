@@ -14,10 +14,10 @@ dependencies:
     sdk: flutter
   http: ^1.2.2
   random_string: ^2.3.1
-  flutter_riverpod: ^2.5.3
+  flutter_riverpod: ^2.6.1
   webview_flutter: ^4.10.0
   freezed_annotation: ^2.4.4
-  riverpod_annotation: ^2.5.3
+  riverpod_annotation: ^2.6.1
   
 
 dev_dependencies:
@@ -26,4 +26,4 @@ dev_dependencies:
   flutter_lints: ^2.0.1
   freezed: ^2.5.2
   build_runner: ^2.4.12
-  riverpod_generator: ^2.4.3
+  riverpod_generator: ^2.6.3

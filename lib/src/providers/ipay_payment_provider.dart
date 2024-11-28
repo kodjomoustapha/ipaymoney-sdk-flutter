@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ipay_money_flutter_sdk/src/models/payment.dart';
 import 'package:ipay_money_flutter_sdk/src/utils/utils.dart';
 import 'package:random_string/random_string.dart';
@@ -13,7 +14,7 @@ part 'ipay_payment_provider.g.dart';
 /// Otherwise, it returns the response's reason phrase.
 @riverpod
 Future<String> ipayPayment(
-  IpayPaymentRef ref, {
+  Ref ref, {
   required Payment? payment,
 }) async {
   var random = randomAlphaNumeric(20);
@@ -59,7 +60,7 @@ Future<String> ipayPayment(
 }
 
 @riverpod
-Future<String> ipayVisaMasterCardPayment(IpayVisaMasterCardPaymentRef ref,
+Future<String> ipayVisaMasterCardPayment(Ref ref,
     {required String authorization,
     required String orderReference,
     required String reference,
@@ -100,7 +101,7 @@ Future<String> ipayVisaMasterCardPayment(IpayVisaMasterCardPaymentRef ref,
 /// it returns the response body as a string. Otherwise, it returns the response's reason phrase.
 @riverpod
 Future<String> paymentEnquiry(
-  PaymentEnquiryRef ref, {
+  Ref ref, {
   required Payment payment,
 }) async {
   var headers = {

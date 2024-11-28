@@ -6,7 +6,7 @@ part of 'ipay_payment_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$ipayPaymentHash() => r'31c8870c186946b18aa71a86433a6332669c3416';
+String _$ipayPaymentHash() => r'2fc91e676250a7056436f9474c93c3e3d9f4400a';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -178,6 +178,8 @@ class IpayPaymentProvider extends AutoDisposeFutureProvider<String> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin IpayPaymentRef on AutoDisposeFutureProviderRef<String> {
   /// The parameter `payment` of this provider.
   Payment? get payment;
@@ -192,7 +194,7 @@ class _IpayPaymentProviderElement
 }
 
 String _$ipayVisaMasterCardPaymentHash() =>
-    r'6b53ef7fed8871d7a81a83405d3c3611b7270810';
+    r'cb2095b57b1d988fb01642173e12598666cc26ee';
 
 /// See also [ipayVisaMasterCardPayment].
 @ProviderFor(ipayVisaMasterCardPayment)
@@ -342,6 +344,8 @@ class IpayVisaMasterCardPaymentProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin IpayVisaMasterCardPaymentRef on AutoDisposeFutureProviderRef<String> {
   /// The parameter `authorization` of this provider.
   String get authorization;
@@ -375,7 +379,7 @@ class _IpayVisaMasterCardPaymentProviderElement
       (origin as IpayVisaMasterCardPaymentProvider).paymentReference;
 }
 
-String _$paymentEnquiryHash() => r'b2a90d1a1f6362ecbbad1ee65fc56a7ba002ac9a';
+String _$paymentEnquiryHash() => r'13026fd403e66f9139ed677ffe8d393214edf982';
 
 /// Define a FutureProvider that can be used for paymentEnquiry request
 /// Sends a GET request to the API to retrieve information about the payment specified
@@ -520,6 +524,8 @@ class PaymentEnquiryProvider extends AutoDisposeFutureProvider<String> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin PaymentEnquiryRef on AutoDisposeFutureProviderRef<String> {
   /// The parameter `payment` of this provider.
   Payment get payment;
@@ -533,4 +539,4 @@ class _PaymentEnquiryProviderElement
   Payment get payment => (origin as PaymentEnquiryProvider).payment;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
