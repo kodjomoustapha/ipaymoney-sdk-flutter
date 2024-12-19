@@ -50,6 +50,12 @@ class IpayPayments {
   ///The reference sufix that let you track the type of the transaction.
   String referencePrefix;
 
+  String? transationId;
+
+  String? paymentSucceededMsg;
+
+  String? paymentFailedMsg;
+
   IpayPayments(
       {required this.amount,
       required this.authorization,
@@ -59,11 +65,14 @@ class IpayPayments {
       required this.country,
       required this.currency,
       required this.targetEnvironment,
-      this.timeOut = 5,
+      this.timeOut = 60,
       this.cvv = '',
       this.exp = '',
       this.pan = '',
-      this.referencePrefix = 'ipay'});
+      this.referencePrefix = 'ipay',
+      this.transationId,
+      this.paymentSucceededMsg,
+      this.paymentFailedMsg});
 
   Future<void> ipayPayment(
       {required BuildContext context,
@@ -83,7 +92,8 @@ class IpayPayments {
         timeOut: timeOut,
         referencePrefix: referencePrefix
             .replaceAll(' ', '')
-            .replaceAll(RegExp(r'[^a-zA-Z0-9 .()\-\s]'), '-'));
+            .replaceAll(RegExp(r'[^a-zA-Z0-9 .()\-\s]'), '-'),
+        transactionId: transationId);
     final isCardPayment = payment.paymentType == PaymentType.card;
     final paymentWidget = ProviderScope(
       child: Consumer(builder: (context, ref, child) {
@@ -132,6 +142,8 @@ class IpayPayments {
               payment: payment,
               reference: val['reference'],
               publicReference: val['public_reference'],
+              paymentSucceededMsg: paymentSucceededMsg,
+              paymentFailedMsg: paymentFailedMsg,
             );
           },
           error: (error, stackTrace) {
@@ -168,12 +180,16 @@ class IpayConsumer extends ConsumerStatefulWidget {
   final String reference;
   final Payment payment;
   final String publicReference;
+  final String? paymentSucceededMsg;
+  final String? paymentFailedMsg;
   final void Function(String) callback;
   const IpayConsumer(
       {required this.payment,
       required this.publicReference,
       required this.reference,
       required this.callback,
+      required this.paymentSucceededMsg,
+      required this.paymentFailedMsg,
       super.key});
 
   @override
@@ -247,24 +263,27 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _transactionStatus == TransactionStatus.succeeded
-                        ? const Text('Paiement effectuer avec succès',
-                            style: TextStyle(
+                        ? Text(
+                            widget.paymentSucceededMsg ??
+                                'Paiement effectuer avec succès',
+                            style: const TextStyle(
                                 color: primaryColor,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 20),
                             textAlign: TextAlign.center)
                         : _transactionStatus == TransactionStatus.failed
-                            ? const Column(
+                            ? Column(
                                 children: [
                                   Text(
-                                    'La transaction a échouée.\nVeuillez reprendre le paiement',
-                                    style: TextStyle(
+                                    widget.paymentFailedMsg ??
+                                        'La transaction a échouée.\nVeuillez reprendre le paiement',
+                                    style: const TextStyle(
                                         color: Colors.red,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 20),
                                     textAlign: TextAlign.center,
                                   ),
-                                  Padding(
+                                  const Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Icon(Icons.warning_amber_rounded,
                                         color: Colors.red, size: 70),

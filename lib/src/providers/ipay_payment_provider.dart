@@ -17,7 +17,6 @@ Future<String> ipayPayment(
   Ref ref, {
   required Payment? payment,
 }) async {
-  var random = randomAlphaNumeric(20);
   var headers = {
     'Ipay-Target-Environment': convertEnumToString(payment!.targetEnvironment!),
     'Ipay-Payment-Type': ipayPaymentType(payment.paymentType!),
@@ -34,7 +33,8 @@ Future<String> ipayPayment(
     "currency": "XOF",
     "country": convertEnumToString(payment.country!).toUpperCase(),
     "amount": payment.amount,
-    "transaction_id": "${payment.referencePrefix}-$random",
+    "transaction_id": payment.transactionId ??
+        "${payment.referencePrefix}-${randomAlphaNumeric(20)}",
     "msisdn": payment.country == Country.ne
         ? '227${payment.msisdn}'
         : '225${payment.msisdn}',
