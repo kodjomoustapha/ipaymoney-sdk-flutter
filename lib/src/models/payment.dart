@@ -20,6 +20,7 @@ class Payment with _$Payment {
     String? cvv,
     int? timeOut,
     String? referencePrefix,
+    String? transactionId,
     TargetEnvironment? targetEnvironment,
   }) = _Payment;
 }

@@ -77,6 +77,7 @@ class _TestState extends State<Test> {
                         },
                         selected: _paymentType == PaymentType.mobile,
                         width: 140,
+                        left: 20,
                       ),
                       PaymentOptionWidget(
                         assets: const [
@@ -91,6 +92,7 @@ class _TestState extends State<Test> {
                         },
                         selected: _paymentType == PaymentType.card,
                         width: 130,
+                        left: 35,
                       ),
                       PaymentOptionWidget(
                         assets: const ["assets/boa.png"],
@@ -102,6 +104,7 @@ class _TestState extends State<Test> {
                         },
                         selected: _paymentType == PaymentType.boa,
                         width: 65,
+                        left: 13,
                       ),
                     ],
                   ),
@@ -117,6 +120,7 @@ class _TestState extends State<Test> {
                         },
                         selected: _paymentType == PaymentType.alizza,
                         width: 110,
+                        left: 35,
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.04),
                       PaymentOptionWidget(
@@ -129,6 +133,7 @@ class _TestState extends State<Test> {
                         },
                         selected: _paymentType == PaymentType.amanata,
                         width: 85,
+                        left: 17,
                       ),
                     ],
                   ),

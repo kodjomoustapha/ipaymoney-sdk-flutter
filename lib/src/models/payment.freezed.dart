@@ -31,6 +31,7 @@ mixin _$Payment {
   String? get cvv => throw _privateConstructorUsedError;
   int? get timeOut => throw _privateConstructorUsedError;
   String? get referencePrefix => throw _privateConstructorUsedError;
+  String? get transactionId => throw _privateConstructorUsedError;
   TargetEnvironment? get targetEnvironment =>
       throw _privateConstructorUsedError;
 
@@ -60,6 +61,7 @@ abstract class $PaymentCopyWith<$Res> {
       String? cvv,
       int? timeOut,
       String? referencePrefix,
+      String? transactionId,
       TargetEnvironment? targetEnvironment});
 }
 
@@ -92,6 +94,7 @@ class _$PaymentCopyWithImpl<$Res, $Val extends Payment>
     Object? cvv = freezed,
     Object? timeOut = freezed,
     Object? referencePrefix = freezed,
+    Object? transactionId = freezed,
     Object? targetEnvironment = freezed,
   }) {
     return _then(_value.copyWith(
@@ -151,6 +154,10 @@ class _$PaymentCopyWithImpl<$Res, $Val extends Payment>
           ? _value.referencePrefix
           : referencePrefix // ignore: cast_nullable_to_non_nullable
               as String?,
+      transactionId: freezed == transactionId
+          ? _value.transactionId
+          : transactionId // ignore: cast_nullable_to_non_nullable
+              as String?,
       targetEnvironment: freezed == targetEnvironment
           ? _value.targetEnvironment
           : targetEnvironment // ignore: cast_nullable_to_non_nullable
@@ -181,6 +188,7 @@ abstract class _$$PaymentImplCopyWith<$Res> implements $PaymentCopyWith<$Res> {
       String? cvv,
       int? timeOut,
       String? referencePrefix,
+      String? transactionId,
       TargetEnvironment? targetEnvironment});
 }
 
@@ -211,6 +219,7 @@ class __$$PaymentImplCopyWithImpl<$Res>
     Object? cvv = freezed,
     Object? timeOut = freezed,
     Object? referencePrefix = freezed,
+    Object? transactionId = freezed,
     Object? targetEnvironment = freezed,
   }) {
     return _then(_$PaymentImpl(
@@ -270,6 +279,10 @@ class __$$PaymentImplCopyWithImpl<$Res>
           ? _value.referencePrefix
           : referencePrefix // ignore: cast_nullable_to_non_nullable
               as String?,
+      transactionId: freezed == transactionId
+          ? _value.transactionId
+          : transactionId // ignore: cast_nullable_to_non_nullable
+              as String?,
       targetEnvironment: freezed == targetEnvironment
           ? _value.targetEnvironment
           : targetEnvironment // ignore: cast_nullable_to_non_nullable
@@ -296,6 +309,7 @@ class _$PaymentImpl implements _Payment {
       this.cvv,
       this.timeOut,
       this.referencePrefix,
+      this.transactionId,
       this.targetEnvironment});
 
 // Define the properties of the `Payment` class
@@ -328,11 +342,13 @@ class _$PaymentImpl implements _Payment {
   @override
   final String? referencePrefix;
   @override
+  final String? transactionId;
+  @override
   final TargetEnvironment? targetEnvironment;
 
   @override
   String toString() {
-    return 'Payment(publicReference: $publicReference, reference: $reference, authorization: $authorization, name: $name, amount: $amount, country: $country, msisdn: $msisdn, currency: $currency, paymentType: $paymentType, pan: $pan, exp: $exp, cvv: $cvv, timeOut: $timeOut, referencePrefix: $referencePrefix, targetEnvironment: $targetEnvironment)';
+    return 'Payment(publicReference: $publicReference, reference: $reference, authorization: $authorization, name: $name, amount: $amount, country: $country, msisdn: $msisdn, currency: $currency, paymentType: $paymentType, pan: $pan, exp: $exp, cvv: $cvv, timeOut: $timeOut, referencePrefix: $referencePrefix, transactionId: $transactionId, targetEnvironment: $targetEnvironment)';
   }
 
   @override
@@ -360,6 +376,8 @@ class _$PaymentImpl implements _Payment {
             (identical(other.timeOut, timeOut) || other.timeOut == timeOut) &&
             (identical(other.referencePrefix, referencePrefix) ||
                 other.referencePrefix == referencePrefix) &&
+            (identical(other.transactionId, transactionId) ||
+                other.transactionId == transactionId) &&
             (identical(other.targetEnvironment, targetEnvironment) ||
                 other.targetEnvironment == targetEnvironment));
   }
@@ -381,6 +399,7 @@ class _$PaymentImpl implements _Payment {
       cvv,
       timeOut,
       referencePrefix,
+      transactionId,
       targetEnvironment);
 
   /// Create a copy of Payment
@@ -408,6 +427,7 @@ abstract class _Payment implements Payment {
       final String? cvv,
       final int? timeOut,
       final String? referencePrefix,
+      final String? transactionId,
       final TargetEnvironment? targetEnvironment}) = _$PaymentImpl;
 
 // Define the properties of the `Payment` class
@@ -439,6 +459,8 @@ abstract class _Payment implements Payment {
   int? get timeOut;
   @override
   String? get referencePrefix;
+  @override
+  String? get transactionId;
   @override
   TargetEnvironment? get targetEnvironment;
 
