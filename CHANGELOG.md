@@ -1,3 +1,8 @@
+## 0.0.36
+- Upgrade dependencies
+- Added news parameters : transationId, paymentSucceededMsg, paymentFailedMsg
+
+
 ## 0.0.35
 - Upgrade dependencies
 
