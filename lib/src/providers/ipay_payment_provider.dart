@@ -131,6 +131,8 @@ String ipayPaymentType(PaymentType paymentType) {
   switch (paymentType) {
     case PaymentType.boa:
       return "sta";
+    case PaymentType.myNita:
+      return "nita_online";
     default:
       return convertEnumToString(paymentType);
   }

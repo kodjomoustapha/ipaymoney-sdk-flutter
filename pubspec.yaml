@@ -27,3 +27,7 @@ dev_dependencies:
   freezed: ^2.5.2
   build_runner: ^2.4.12
   riverpod_generator: ^2.6.3
+
+flutter:
+  assets:
+    - lib/assets/

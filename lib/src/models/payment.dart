@@ -29,7 +29,7 @@ class Payment with _$Payment {
 enum Country { ne, bj }
 
 // Define the `PaymentType` enum
-enum PaymentType { mobile, alizza, card, amanata, boa }
+enum PaymentType { mobile, alizza, card, amanata, boa, myNita }
 
 // Define the `TargetEnvironment` enum
 enum TargetEnvironment { live, sandbox }
