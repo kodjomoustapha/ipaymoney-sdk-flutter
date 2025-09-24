@@ -15,12 +15,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: IpayPaymentsWidget(
-            amount: '',
             authorization: 'Your SK',
             country: Country.ne,
-            currency: '',
+            currency: 'XOF',
             targetEnvironment: TargetEnvironment.live,
-            callback: (callback) async {
+            callback: (callback, context) async {
               if (jsonDecode(callback)['status'] == 'success') {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(

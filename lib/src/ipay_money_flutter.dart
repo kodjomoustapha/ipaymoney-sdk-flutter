@@ -687,7 +687,7 @@ class IpayPaymentsWidget extends StatefulWidget {
   final String? paymentFailedMsg;
 
   /// Callback function to handle payment status updates
-  final void Function(String) callback;
+  final void Function(String, BuildContext) callback;
 
   const IpayPaymentsWidget(
       {this.amount,
@@ -1248,7 +1248,9 @@ class _IpayPaymentsWidgetState extends State<IpayPaymentsWidget>
               paymentFailedMsg: widget.paymentFailedMsg)
           .ipayPayment(
         context: context,
-        callback: widget.callback,
+        callback: (str) {
+          widget.callback.call(str, context);
+        },
       );
     } catch (e) {
       if (mounted) {

@@ -44,7 +44,9 @@ Future<String> ipayPayment(
       "pan": payment.pan,
       "exp": payment.exp,
       "cvv": payment.cvv
-    }
+    },
+    if (payment.paymentType == PaymentType.myNita)
+      "payment_option": "nita_online",
   });
 
   request.headers.addAll(headers);
