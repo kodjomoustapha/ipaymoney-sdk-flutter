@@ -659,7 +659,7 @@ class IpayCertificationFlag extends StatelessWidget {
 }
 
 class IpayPaymentsWidget extends StatefulWidget {
-  /// the amount of the payment if provided the amount textfield will disappear
+  /// the amount of the payment if provided the amount TextFormField will disappear
   final String? amount;
 
   /// the authorization token for the payment
@@ -710,7 +710,7 @@ class IpayPaymentsWidget extends StatefulWidget {
 class _IpayPaymentsWidgetState extends State<IpayPaymentsWidget>
     with TickerProviderStateMixin {
   final _mycontrollerPhone = TextEditingController();
-  final _mycontrollerAmount = TextEditingController();
+  late final _mycontrollerAmount = TextEditingController(text: widget.amount);
   final _mycontrollerName = TextEditingController();
   final _mycontrollerCvv = TextEditingController();
   final _mycontrollerExp = TextEditingController();
@@ -989,16 +989,18 @@ class _IpayPaymentsWidgetState extends State<IpayPaymentsWidget>
               FilteringTextInputFormatter.allow(RegExp(r'[a-zA-ZÀ-ÿ\s]')),
             ],
           ),
-          const SizedBox(height: 16),
-          _customTextField(
-            controller: _mycontrollerAmount,
-            hintText: "Entrez le montant",
-            label: "Montant",
-            keyboardType: TextInputType.number,
-            fieldName: 'amount',
-            suffixText: "FCFA",
-            inputFormatters: [AmountFormatter()],
-          ),
+          if (widget.amount?.trim().isEmpty ?? true) ...[
+            const SizedBox(height: 16),
+            _customTextField(
+              controller: _mycontrollerAmount,
+              hintText: "Entrez le montant",
+              label: "Montant",
+              keyboardType: TextInputType.number,
+              fieldName: 'amount',
+              suffixText: "FCFA",
+              inputFormatters: [AmountFormatter()],
+            ),
+          ],
           const SizedBox(height: 16),
           _customTextField(
             controller: _mycontrollerPhone,

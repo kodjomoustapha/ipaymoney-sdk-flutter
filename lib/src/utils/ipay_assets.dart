@@ -66,7 +66,7 @@ class IpayAssets {
       case PaymentType.amanata:
         return 'AmanaTa';
       case PaymentType.myNita:
-        return 'MyNITA';
+        return 'Paiement En Ligne Nita';
     }
   }
 }
