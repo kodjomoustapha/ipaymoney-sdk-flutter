@@ -686,6 +686,24 @@ class IpayPaymentsWidget extends StatefulWidget {
 
   final String? paymentFailedMsg;
 
+  /// show or hide mobile money provider
+  final bool showMobileMoneyProvider;
+
+  /// show or hide Nita online provider
+  final bool showNitaOnlineProvider;
+
+  /// show or hide AmanaTa provider
+  final bool showAmanaTaProvider;
+
+  /// show or hide AlIzza provider
+  final bool showAlIzzaProvider;
+
+  /// show or hide Boa provider
+  final bool showBoaProvider;
+
+  /// show or hide Visa/MasterCard provider
+  final bool showCardProvider;
+
   /// Callback function to handle payment status updates
   final void Function(String, BuildContext) callback;
 
@@ -701,6 +719,12 @@ class IpayPaymentsWidget extends StatefulWidget {
       this.transationId,
       this.paymentSucceededMsg,
       this.paymentFailedMsg,
+      this.showMobileMoneyProvider = true,
+      this.showNitaOnlineProvider = true,
+      this.showAmanaTaProvider = true,
+      this.showAlIzzaProvider = true,
+      this.showBoaProvider = true,
+      this.showCardProvider = true,
       super.key});
 
   @override
@@ -727,36 +751,42 @@ class _IpayPaymentsWidgetState extends State<IpayPaymentsWidget>
   late Animation<Offset> _slideAnimation;
   List<Widget> _listWidget() {
     return [
-      PaymentOptionWidget(
-        assets: IpayAssets.mobileMoneyAssets,
-        label: "Mobile Money",
-        onTap: () => _selectPaymentType(PaymentType.mobile),
-      ),
-      PaymentOptionWidget(
-        assets: IpayAssets.bankCardAssets,
-        label: "Carte Bancaire",
-        onTap: () => _selectPaymentType(PaymentType.card),
-      ),
-      PaymentOptionWidget(
-        assets: IpayAssets.alizzaAssets,
-        label: "AlIzza money",
-        onTap: () => _selectPaymentType(PaymentType.alizza),
-      ),
-      PaymentOptionWidget(
-        assets: IpayAssets.boaAssets,
-        label: "Boa",
-        onTap: () => _selectPaymentType(PaymentType.boa),
-      ),
-      PaymentOptionWidget(
-        assets: IpayAssets.amanataAssets,
-        label: "AmanaTa",
-        onTap: () => _selectPaymentType(PaymentType.amanata),
-      ),
-      PaymentOptionWidget(
-        assets: IpayAssets.mynitaAssets,
-        label: "Paiement En Ligne Nita",
-        onTap: () => _selectPaymentType(PaymentType.myNita),
-      ),
+      if (widget.showMobileMoneyProvider)
+        PaymentOptionWidget(
+          assets: IpayAssets.mobileMoneyAssets,
+          label: "Mobile Money",
+          onTap: () => _selectPaymentType(PaymentType.mobile),
+        ),
+      if (widget.showCardProvider)
+        PaymentOptionWidget(
+          assets: IpayAssets.bankCardAssets,
+          label: "Carte Bancaire",
+          onTap: () => _selectPaymentType(PaymentType.card),
+        ),
+      if (widget.showAlIzzaProvider)
+        PaymentOptionWidget(
+          assets: IpayAssets.alizzaAssets,
+          label: "AlIzza money",
+          onTap: () => _selectPaymentType(PaymentType.alizza),
+        ),
+      if (widget.showAmanaTaProvider)
+        PaymentOptionWidget(
+          assets: IpayAssets.boaAssets,
+          label: "Boa",
+          onTap: () => _selectPaymentType(PaymentType.boa),
+        ),
+      if (widget.showAmanaTaProvider)
+        PaymentOptionWidget(
+          assets: IpayAssets.amanataAssets,
+          label: "AmanaTa",
+          onTap: () => _selectPaymentType(PaymentType.amanata),
+        ),
+      if (widget.showNitaOnlineProvider)
+        PaymentOptionWidget(
+          assets: IpayAssets.mynitaAssets,
+          label: "Paiement En Ligne Nita",
+          onTap: () => _selectPaymentType(PaymentType.myNita),
+        ),
     ];
   }
 
