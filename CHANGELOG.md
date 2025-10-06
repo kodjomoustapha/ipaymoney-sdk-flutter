@@ -1,3 +1,15 @@
+## 0.0.37
+- Add MyNita (Paiement En Ligne Nita) payment method support
+- Add IpayPaymentsWidget for complete UI payment integration with payment method selection
+- Add payment input formatting and validation (phone number, card number, expiry date, amount, CVV)
+- Add payment method visibility controls (show/hide specific payment providers)
+- Add optional pre-filled amount field in widget
+- Refactor payment providers to use FutureProvider.family for better parameter handling
+- Include BuildContext in callback function for better UI feedback
+- Enhance README documentation with detailed integration examples
+- Add payment assets management for all payment methods
+- Improve UI/UX with animations and better form validation
+
 ## 0.0.36
 - Upgrade dependencies
 - Added news parameters : transationId, paymentSucceededMsg, paymentFailedMsg
