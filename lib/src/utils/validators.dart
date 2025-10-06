@@ -24,14 +24,6 @@ class FormValidators {
       return 'Montant invalide';
     }
 
-    if (amount < 100) {
-      return 'Le montant minimum est de 100 FCFA';
-    }
-
-    if (amount > 1000000) {
-      return 'Le montant maximum est de 1 000 000 FCFA';
-    }
-
     return null;
   }
 

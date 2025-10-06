@@ -102,18 +102,20 @@ class IpayPayments {
     final isCardPayment = payment.paymentType == PaymentType.card;
     final paymentWidget = ProviderScope(
       child: Consumer(builder: (context, ref, child) {
-        final startPayment = ref.watch(ipayPaymentProvider(payment: payment));
+        final startPayment = ref.watch(ipayPaymentProvider(payment));
 
         return startPayment.when(
           data: (value) {
             var val = jsonDecode(value);
             if (isCardPayment) {
               if (val['state'] == 'AWAIT_3DS') {
-                final cardPayment = ref.watch(ipayVisaMasterCardPaymentProvider(
-                    authorization: payment.authorization!,
-                    orderReference: val['order_reference'],
-                    reference: val['reference'],
-                    paymentReference: val['payment_reference']));
+                final cardPayment =
+                    ref.watch(ipayVisaMasterCardPaymentProvider({
+                  'authorization': payment.authorization!,
+                  'orderReference': val['order_reference'],
+                  'reference': val['reference'],
+                  'paymentReference': val['payment_reference']
+                }));
 
                 return cardPayment.when(
                     data: (url) {
@@ -149,6 +151,7 @@ class IpayPayments {
               publicReference: val['public_reference'],
               paymentSucceededMsg: paymentSucceededMsg,
               paymentFailedMsg: paymentFailedMsg,
+              nitaCode: val['meta_data']['code'],
             );
           },
           error: (error, stackTrace) {
@@ -187,6 +190,7 @@ class IpayConsumer extends ConsumerStatefulWidget {
   final String publicReference;
   final String? paymentSucceededMsg;
   final String? paymentFailedMsg;
+  final String? nitaCode;
   final void Function(String) callback;
   const IpayConsumer(
       {required this.payment,
@@ -195,6 +199,7 @@ class IpayConsumer extends ConsumerStatefulWidget {
       required this.callback,
       required this.paymentSucceededMsg,
       required this.paymentFailedMsg,
+      required this.nitaCode,
       super.key});
 
   @override
@@ -314,12 +319,88 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                                               height: 20,
                                             ),
                                             Text(
-                                                'Veuillez vous connectez sur votre Compte Amanata pour Valider la Transaction...',
+                                                'Veuillez vous connectez sur votre Compte Amanata pour valider la transaction...',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w300,
                                                     fontSize: 17),
                                                 textAlign: TextAlign.center),
                                           ],
+                                        ),
+                                      if (_payment.paymentType ==
+                                          PaymentType.myNita)
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 30, vertical: 30),
+                                          child: Column(
+                                            children: [
+                                              Text.rich(
+                                                TextSpan(
+                                                  children: [
+                                                    TextSpan(
+                                                      text:
+                                                          "Connectez vous à votre compte ",
+                                                    ),
+                                                    TextSpan(
+                                                      text: "MyNita ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    TextSpan(
+                                                      text:
+                                                          "\nRecherche le paiement dans ",
+                                                    ),
+                                                    TextSpan(
+                                                      text: "Paiement",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    TextSpan(text: "-->"),
+                                                    TextSpan(
+                                                      text: "En ligne ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    TextSpan(
+                                                      text:
+                                                          "puis valider la transaction...",
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              if (widget.nitaCode != null) ...[
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text.rich(
+                                                  TextSpan(
+                                                    children: [
+                                                      TextSpan(
+                                                        text: "REFERENCE: ",
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w200,
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text: widget.nitaCode,
+                                                        style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black,
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ]
+                                            ],
+                                          ),
                                         ),
                                       if (_payment.paymentType ==
                                           PaymentType.mobile) ...[
@@ -423,6 +504,14 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                             ? ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: primaryColor,
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 14, horizontal: 30),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  elevation: 3,
+                                  shadowColor: primaryColor.withOpacity(0.3),
                                 ),
                                 onPressed: () {
                                   if (mounted) {
@@ -434,13 +523,27 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                                 },
                                 child: const Text(
                                   'Retour',
-                                  style: TextStyle(color: Colors.white),
-                                ))
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              )
                             : _transactionStatus ==
                                     TransactionStatus.connectionError
                                 ? ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: primaryColor,
+                                      foregroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 14),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      elevation: 3,
+                                      shadowColor:
+                                          primaryColor.withOpacity(0.3),
                                     ),
                                     onPressed: () {
                                       setState(() {
@@ -449,8 +552,15 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                                       });
                                       _init();
                                     },
-                                    child: const Text('Réessayer',
-                                        style: TextStyle(color: Colors.white)))
+                                    child: const Text(
+                                      'Réessayer',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  )
                                 : const CircularProgressIndicator(
                                     color: primaryColor,
                                   ),
@@ -548,8 +658,7 @@ Future<TransactionStatus?> _checkStatus(
       logger('_checkStatus timer : $timer');
     }
     try {
-      final result =
-          await ref.read(paymentEnquiryProvider(payment: payment).future);
+      final result = await ref.read(paymentEnquiryProvider(payment).future);
 
       final value = jsonDecode(result);
 
@@ -616,6 +725,14 @@ Widget _noConnectionWidgetPlus(
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryColor,
+                  foregroundColor: Colors.white,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 14, horizontal: 30),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 3,
+                  shadowColor: primaryColor.withOpacity(0.3),
                 ),
                 onPressed: onPressed,
                 child: const Text('Réessayer',
@@ -623,6 +740,14 @@ Widget _noConnectionWidgetPlus(
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 14, horizontal: 30),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 3,
+                  shadowColor: primaryColor.withOpacity(0.3),
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -1181,7 +1306,7 @@ class _IpayPaymentsWidgetState extends State<IpayPaymentsWidget>
               prefixIcon: prefixWidget,
               suffixText: suffixText,
               suffixStyle: const TextStyle(
-                color: Colors.blue,
+                color: primaryColor,
                 fontWeight: FontWeight.w600,
                 fontSize: 14,
               ),

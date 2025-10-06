@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: IpayPaymentsWidget(
-            authorization: 'Your SK',
+            authorization: 'sk_1f3e3f0772af4b5f8fc4406cf0dc5011',
             country: Country.ne,
             currency: 'XOF',
             targetEnvironment: TargetEnvironment.live,
