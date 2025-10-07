@@ -1,17 +1,21 @@
 import 'dart:convert';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ipay_money_flutter_sdk/src/models/payment.dart';
 import 'package:ipay_money_flutter_sdk/src/utils/utils.dart';
 import 'package:random_string/random_string.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:http/http.dart' as http;
+part 'ipay_payment_provider.g.dart';
 
 /// Define a FutureProvider that can be used to make a direct payment
 /// Sends a POST request to the API to initiate a payment. The request body contains
 /// information about the payment, such as the amount, the customer's name, and the payment method.
 /// If the request is successful, it returns the response body as a string.
 /// Otherwise, it returns the response's reason phrase.
-final ipayPaymentProvider =
-    FutureProvider.family<String, Payment?>((ref, payment) async {
+@riverpod
+Future<String> ipayPayment(
+  Ref ref, {
+  required Payment? payment,
+}) async {
   var headers = {
     'Ipay-Target-Environment': convertEnumToString(payment!.targetEnvironment!),
     'Ipay-Payment-Type': ipayPaymentType(payment.paymentType!),
@@ -54,22 +58,26 @@ final ipayPaymentProvider =
     logger("ipayPayment(statusCode : ${response.statusCode}) :  $res");
     throw ArgumentError(jsonDecode(res)["message"], response.reasonPhrase!);
   }
-});
+}
 
-final ipayVisaMasterCardPaymentProvider =
-    FutureProvider.family<String, Map<String, String>>((ref, params) async {
+@riverpod
+Future<String> ipayVisaMasterCardPayment(Ref ref,
+    {required String authorization,
+    required String orderReference,
+    required String reference,
+    required String paymentReference}) async {
   var headers = {
     'Ipay-Target-Environment': 'live',
     'Ipay-Payment-Type': 'card',
-    'Authorization': 'Bearer ${params['authorization']}',
+    'Authorization': 'Bearer $authorization',
     'Content-Type': 'application/json',
   };
   var request = http.Request(
       'POST', Uri.parse('$_apiBaseUrl/payments/send_device_information'));
   request.body = json.encode({
-    "reference": params['reference'],
-    "order_reference": params['orderReference'],
-    "payment_reference": params['paymentReference']
+    "reference": reference,
+    "order_reference": orderReference,
+    "payment_reference": paymentReference
   });
   request.headers.addAll(headers);
 
@@ -86,14 +94,17 @@ final ipayVisaMasterCardPaymentProvider =
         "ipayVisaMasterCardPayment(statusCode : ${response.statusCode}) : $res");
     throw ArgumentError(jsonDecode(res)["message"], response.reasonPhrase!);
   }
-});
+}
 
 /// Define a FutureProvider that can be used for paymentEnquiry request
 /// Sends a GET request to the API to retrieve information about the payment specified
 /// by the reference property of the Payment object. If the request is successful,
 /// it returns the response body as a string. Otherwise, it returns the response's reason phrase.
-final paymentEnquiryProvider =
-    FutureProvider.family<String, Payment>((ref, payment) async {
+@riverpod
+Future<String> paymentEnquiry(
+  Ref ref, {
+  required Payment payment,
+}) async {
   var headers = {
     'Ipay-Payment-Type': ipayPaymentType(payment.paymentType!),
     'Ipay-Target-Environment': convertEnumToString(payment.targetEnvironment),
@@ -115,7 +126,7 @@ final paymentEnquiryProvider =
     logger("paymentEnquiry(statusCode : ${response.statusCode}) : $res");
     throw ArgumentError(jsonDecode(res)["message"], response.reasonPhrase!);
   }
-});
+}
 
 String ipayPaymentType(PaymentType paymentType) {
   switch (paymentType) {
