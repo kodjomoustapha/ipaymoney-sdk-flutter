@@ -1,3 +1,5 @@
+## 0.0.38
+- fix
 ## 0.0.37
 - Add MyNita (Paiement En Ligne Nita) payment method support
 - Add IpayPaymentsWidget for complete UI payment integration with payment method selection
