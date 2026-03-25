@@ -74,7 +74,7 @@ final class IpayPaymentProvider
   }
 }
 
-String _$ipayPaymentHash() => r'734f035ec4d4ad82e732ef38e803c1c3ed66ffeb';
+String _$ipayPaymentHash() => r'29501e7c1900838cc8106c70cee55a84ba16daf3';
 
 /// Define a FutureProvider that can be used to make a direct payment
 /// Sends a POST request to the API to initiate a payment. The request body contains
@@ -116,6 +116,7 @@ final class IpayVisaMasterCardPaymentProvider
     required IpayVisaMasterCardPaymentFamily super.from,
     required ({
       String authorization,
+      String targetEnvironment,
       String orderReference,
       String reference,
       String paymentReference,
@@ -150,6 +151,7 @@ final class IpayVisaMasterCardPaymentProvider
         this.argument
             as ({
               String authorization,
+              String targetEnvironment,
               String orderReference,
               String reference,
               String paymentReference,
@@ -157,6 +159,7 @@ final class IpayVisaMasterCardPaymentProvider
     return ipayVisaMasterCardPayment(
       ref,
       authorization: argument.authorization,
+      targetEnvironment: argument.targetEnvironment,
       orderReference: argument.orderReference,
       reference: argument.reference,
       paymentReference: argument.paymentReference,
@@ -176,7 +179,7 @@ final class IpayVisaMasterCardPaymentProvider
 }
 
 String _$ipayVisaMasterCardPaymentHash() =>
-    r'cb2095b57b1d988fb01642173e12598666cc26ee';
+    r'6304aed93cfe946cc14e41c7ac5935b40a1e2b4b';
 
 final class IpayVisaMasterCardPaymentFamily extends $Family
     with
@@ -184,6 +187,7 @@ final class IpayVisaMasterCardPaymentFamily extends $Family
           FutureOr<String>,
           ({
             String authorization,
+            String targetEnvironment,
             String orderReference,
             String reference,
             String paymentReference,
@@ -200,12 +204,14 @@ final class IpayVisaMasterCardPaymentFamily extends $Family
 
   IpayVisaMasterCardPaymentProvider call({
     required String authorization,
+    required String targetEnvironment,
     required String orderReference,
     required String reference,
     required String paymentReference,
   }) => IpayVisaMasterCardPaymentProvider._(
     argument: (
       authorization: authorization,
+      targetEnvironment: targetEnvironment,
       orderReference: orderReference,
       reference: reference,
       paymentReference: paymentReference,

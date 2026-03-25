@@ -12,10 +12,7 @@ part 'ipay_payment_provider.g.dart';
 /// If the request is successful, it returns the response body as a string.
 /// Otherwise, it returns the response's reason phrase.
 @riverpod
-Future<String> ipayPayment(
-  Ref ref, {
-  required Payment? payment,
-}) async {
+Future<String> ipayPayment(Ref ref, {required Payment? payment}) async {
   var headers = {
     'Ipay-Target-Environment': convertEnumToString(payment!.targetEnvironment!),
     'Ipay-Payment-Type': ipayPaymentType(payment.paymentType!),
@@ -23,26 +20,31 @@ Future<String> ipayPayment(
     'Authorization': 'Bearer ${payment.authorization}',
   };
   var request = http.Request(
-      'POST',
-      Uri.parse(payment.paymentType == PaymentType.card
+    'POST',
+    Uri.parse(
+      payment.paymentType == PaymentType.card
           ? '$_apiBaseUrl/payments/bank_card_payment'
-          : '$_apiBaseUrl/payments'));
+          : '$_apiBaseUrl/payments',
+    ),
+  );
   request.body = json.encode({
     "customer_name": payment.name,
-    "currency": "XOF",
+    "currency": payment.currency ?? "XOF",
     "country": convertEnumToString(payment.country!).toUpperCase(),
     "amount": payment.amount,
-    "transaction_id": payment.transactionId ??
+    "transaction_id":
+        payment.transactionId ??
         "${payment.referencePrefix}-${randomAlphaNumeric(20)}",
-    "msisdn": payment.country == Country.ne
-        ? '227${payment.msisdn}'
-        : '225${payment.msisdn}',
+    "msisdn":
+        payment.country == Country.ne
+            ? '227${payment.msisdn}'
+            : '225${payment.msisdn}',
     if (payment.paymentType == PaymentType.boa) ...{"payment_option": "sta"},
     if (payment.paymentType == PaymentType.card) ...{
       "payment_option": "card",
       "pan": payment.pan,
       "exp": payment.exp,
-      "cvv": payment.cvv
+      "cvv": payment.cvv,
     },
     if (payment.paymentType == PaymentType.myNita)
       "payment_option": "nita_online",
@@ -61,23 +63,28 @@ Future<String> ipayPayment(
 }
 
 @riverpod
-Future<String> ipayVisaMasterCardPayment(Ref ref,
-    {required String authorization,
-    required String orderReference,
-    required String reference,
-    required String paymentReference}) async {
+Future<String> ipayVisaMasterCardPayment(
+  Ref ref, {
+  required String authorization,
+  required String targetEnvironment,
+  required String orderReference,
+  required String reference,
+  required String paymentReference,
+}) async {
   var headers = {
-    'Ipay-Target-Environment': 'live',
+    'Ipay-Target-Environment': targetEnvironment,
     'Ipay-Payment-Type': 'card',
     'Authorization': 'Bearer $authorization',
     'Content-Type': 'application/json',
   };
   var request = http.Request(
-      'POST', Uri.parse('$_apiBaseUrl/payments/send_device_information'));
+    'POST',
+    Uri.parse('$_apiBaseUrl/payments/send_device_information'),
+  );
   request.body = json.encode({
     "reference": reference,
     "order_reference": orderReference,
-    "payment_reference": paymentReference
+    "payment_reference": paymentReference,
   });
   request.headers.addAll(headers);
 
@@ -91,7 +98,8 @@ Future<String> ipayVisaMasterCardPayment(Ref ref,
     return url;
   } else {
     logger(
-        "ipayVisaMasterCardPayment(statusCode : ${response.statusCode}) : $res");
+      "ipayVisaMasterCardPayment(statusCode : ${response.statusCode}) : $res",
+    );
     throw ArgumentError(jsonDecode(res)["message"], response.reasonPhrase!);
   }
 }
@@ -101,10 +109,7 @@ Future<String> ipayVisaMasterCardPayment(Ref ref,
 /// by the reference property of the Payment object. If the request is successful,
 /// it returns the response body as a string. Otherwise, it returns the response's reason phrase.
 @riverpod
-Future<String> paymentEnquiry(
-  Ref ref, {
-  required Payment payment,
-}) async {
+Future<String> paymentEnquiry(Ref ref, {required Payment payment}) async {
   var headers = {
     'Ipay-Payment-Type': ipayPaymentType(payment.paymentType!),
     'Ipay-Target-Environment': convertEnumToString(payment.targetEnvironment),
@@ -112,7 +117,9 @@ Future<String> paymentEnquiry(
     'Authorization': 'Bearer ${payment.authorization}',
   };
   var request = http.Request(
-      'GET', Uri.parse('$_apiBaseUrl/payments/${payment.reference}'));
+    'GET',
+    Uri.parse('$_apiBaseUrl/payments/${payment.reference}'),
+  );
   request.body = json.encode({"reference": payment.reference});
 
   request.headers.addAll(headers);

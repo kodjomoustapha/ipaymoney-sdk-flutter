@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
@@ -117,6 +115,9 @@ class IpayPayments {
                   final cardPayment = ref.watch(
                     ipayVisaMasterCardPaymentProvider(
                       authorization: payment.authorization!,
+                      targetEnvironment: convertEnumToString(
+                        payment.targetEnvironment!,
+                      ),
                       orderReference: val['order_reference'],
                       reference: val['reference'],
                       paymentReference: val['payment_reference'],
@@ -149,7 +150,10 @@ class IpayPayments {
                         ),
                   );
                 } else {
-                  Navigator.pop(context);
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (context.mounted) Navigator.pop(context);
+                  });
+                  return const SizedBox.shrink();
                 }
               }
 
@@ -229,10 +233,18 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
     reference: widget.reference,
   );
   late TransactionStatus _transactionStatus = TransactionStatus.pending;
+  Timer? _successTimer;
+
   @override
   void initState() {
     _init();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _successTimer?.cancel();
+    super.dispose();
   }
 
   Future<void> _init() async {
@@ -241,15 +253,8 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
       setState(() {
         _transactionStatus = status!;
       });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (_transactionStatus == TransactionStatus.succeeded) {
-      Timer.periodic(const Duration(seconds: 2), (timerPop) {
-        if (timerPop.tick == 2) {
-          timerPop.cancel();
+      if (status == TransactionStatus.succeeded) {
+        _successTimer = Timer(const Duration(seconds: 2), () {
           if (mounted) {
             widget.callback(
               json.encode({
@@ -260,17 +265,21 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
             );
             Navigator.pop(context);
           }
-        }
-      });
+        });
+      }
     }
+  }
 
-    return WillPopScope(
-      onWillPop: () async {
+  @override
+  Widget build(BuildContext context) {
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop) return;
         if (mounted) {
           widget.callback(json.encode({"status": "failed"}));
           Navigator.pop(context);
         }
-        return false;
       },
       child: Container(
         decoration: const BoxDecoration(
@@ -537,7 +546,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             elevation: 3,
-                            shadowColor: primaryColor.withOpacity(0.3),
+                            shadowColor: primaryColor.withValues(alpha: 0.3),
                           ),
                           onPressed: () {
                             if (mounted) {
@@ -567,7 +576,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             elevation: 3,
-                            shadowColor: primaryColor.withOpacity(0.3),
+                            shadowColor: primaryColor.withValues(alpha: 0.3),
                           ),
                           onPressed: () {
                             setState(() {
@@ -770,7 +779,7 @@ Widget _noConnectionWidgetPlus(
                     borderRadius: BorderRadius.circular(12),
                   ),
                   elevation: 3,
-                  shadowColor: primaryColor.withOpacity(0.3),
+                  shadowColor: primaryColor.withValues(alpha: 0.3),
                 ),
                 onPressed: onPressed,
                 child: const Text(
@@ -790,7 +799,7 @@ Widget _noConnectionWidgetPlus(
                     borderRadius: BorderRadius.circular(12),
                   ),
                   elevation: 3,
-                  shadowColor: primaryColor.withOpacity(0.3),
+                  shadowColor: primaryColor.withValues(alpha: 0.3),
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -942,7 +951,7 @@ class _IpayPaymentsWidgetState extends State<IpayPaymentsWidget>
           label: "AlIzza money",
           onTap: () => _selectPaymentType(PaymentType.alizza),
         ),
-      if (widget.showAmanaTaProvider)
+      if (widget.showBoaProvider)
         PaymentOptionWidget(
           assets: IpayAssets.boaAssets,
           label: "Boa",
@@ -985,6 +994,7 @@ class _IpayPaymentsWidgetState extends State<IpayPaymentsWidget>
   void dispose() {
     _animationController.dispose();
     _mycontrollerPhone.dispose();
+    _mycontrollerAmount.dispose();
     _mycontrollerName.dispose();
     _mycontrollerCvv.dispose();
     _mycontrollerExp.dispose();
