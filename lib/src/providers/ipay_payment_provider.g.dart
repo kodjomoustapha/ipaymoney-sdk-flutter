@@ -15,7 +15,7 @@ part of 'ipay_payment_provider.dart';
 /// Otherwise, it returns the response's reason phrase.
 
 @ProviderFor(ipayPayment)
-const ipayPaymentProvider = IpayPaymentFamily._();
+final ipayPaymentProvider = IpayPaymentFamily._();
 
 /// Define a FutureProvider that can be used to make a direct payment
 /// Sends a POST request to the API to initiate a payment. The request body contains
@@ -31,7 +31,7 @@ final class IpayPaymentProvider
   /// information about the payment, such as the amount, the customer's name, and the payment method.
   /// If the request is successful, it returns the response body as a string.
   /// Otherwise, it returns the response's reason phrase.
-  const IpayPaymentProvider._({
+  IpayPaymentProvider._({
     required IpayPaymentFamily super.from,
     required Payment? super.argument,
   }) : super(
@@ -84,7 +84,7 @@ String _$ipayPaymentHash() => r'734f035ec4d4ad82e732ef38e803c1c3ed66ffeb';
 
 final class IpayPaymentFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<String>, Payment?> {
-  const IpayPaymentFamily._()
+  IpayPaymentFamily._()
     : super(
         retry: null,
         name: r'ipayPaymentProvider',
@@ -107,12 +107,12 @@ final class IpayPaymentFamily extends $Family
 }
 
 @ProviderFor(ipayVisaMasterCardPayment)
-const ipayVisaMasterCardPaymentProvider = IpayVisaMasterCardPaymentFamily._();
+final ipayVisaMasterCardPaymentProvider = IpayVisaMasterCardPaymentFamily._();
 
 final class IpayVisaMasterCardPaymentProvider
     extends $FunctionalProvider<AsyncValue<String>, String, FutureOr<String>>
     with $FutureModifier<String>, $FutureProvider<String> {
-  const IpayVisaMasterCardPaymentProvider._({
+  IpayVisaMasterCardPaymentProvider._({
     required IpayVisaMasterCardPaymentFamily super.from,
     required ({
       String authorization,
@@ -189,7 +189,7 @@ final class IpayVisaMasterCardPaymentFamily extends $Family
             String paymentReference,
           })
         > {
-  const IpayVisaMasterCardPaymentFamily._()
+  IpayVisaMasterCardPaymentFamily._()
     : super(
         retry: null,
         name: r'ipayVisaMasterCardPaymentProvider',
@@ -223,7 +223,7 @@ final class IpayVisaMasterCardPaymentFamily extends $Family
 /// it returns the response body as a string. Otherwise, it returns the response's reason phrase.
 
 @ProviderFor(paymentEnquiry)
-const paymentEnquiryProvider = PaymentEnquiryFamily._();
+final paymentEnquiryProvider = PaymentEnquiryFamily._();
 
 /// Define a FutureProvider that can be used for paymentEnquiry request
 /// Sends a GET request to the API to retrieve information about the payment specified
@@ -237,7 +237,7 @@ final class PaymentEnquiryProvider
   /// Sends a GET request to the API to retrieve information about the payment specified
   /// by the reference property of the Payment object. If the request is successful,
   /// it returns the response body as a string. Otherwise, it returns the response's reason phrase.
-  const PaymentEnquiryProvider._({
+  PaymentEnquiryProvider._({
     required PaymentEnquiryFamily super.from,
     required Payment super.argument,
   }) : super(
@@ -289,7 +289,7 @@ String _$paymentEnquiryHash() => r'13026fd403e66f9139ed677ffe8d393214edf982';
 
 final class PaymentEnquiryFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<String>, Payment> {
-  const PaymentEnquiryFamily._()
+  PaymentEnquiryFamily._()
     : super(
         retry: null,
         name: r'paymentEnquiryProvider',
