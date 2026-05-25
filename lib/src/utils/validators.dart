@@ -38,7 +38,10 @@ class FormValidators {
       return 'Le numéro doit contenir exactement 8 chiffres';
     }
 
-    if (!RegExp(r'^(9[0-9]|8[0-9]|7[0-9])').hasMatch(cleanValue)) {
+    // Supports Niger (7x, 8x, 9x) and Benin (4x, 5x, 6x, 9x) prefixes
+    if (!RegExp(
+      r'^(9[0-9]|8[0-9]|7[0-9]|6[0-9]|5[0-9]|4[0-9])',
+    ).hasMatch(cleanValue)) {
       return 'Numéro de téléphone invalide';
     }
 

@@ -119,12 +119,15 @@ class Payment {
 
   @override
   String toString() {
-    return 'Payment(publicReference: $publicReference, reference: $reference, authorization: $authorization, name: $name, amount: $amount, country: $country, msisdn: $msisdn, currency: $currency, paymentType: $paymentType, pan: $pan, exp: $exp, cvv: $cvv, timeOut: $timeOut, referencePrefix: $referencePrefix, transactionId: $transactionId, targetEnvironment: $targetEnvironment)';
+    return 'Payment(reference: $reference, publicReference: $publicReference, name: $name, amount: $amount, country: $country, currency: $currency, paymentType: $paymentType, timeOut: $timeOut, referencePrefix: $referencePrefix, transactionId: $transactionId, targetEnvironment: $targetEnvironment)';
   }
 }
 
 // Define the `Country` enum
 enum Country { ne, bj }
+
+/// Country phone prefixes map
+const countryPrefixes = {Country.ne: '227', Country.bj: '229'};
 
 // Define the `PaymentType` enum
 enum PaymentType { mobile, alizza, card, amanata, boa, myNita }
@@ -138,5 +141,6 @@ enum TransactionStatus {
   failed,
   pending,
   initiated,
-  connectionError
+  connectionError,
+  timeout,
 }

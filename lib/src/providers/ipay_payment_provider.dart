@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:ipay_money_flutter_sdk/src/models/payment.dart';
+import 'package:ipay_money_flutter_sdk/src/utils/exceptions.dart';
 import 'package:ipay_money_flutter_sdk/src/utils/utils.dart';
 import 'package:random_string/random_string.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -35,10 +36,7 @@ Future<String> ipayPayment(Ref ref, {required Payment? payment}) async {
     "transaction_id":
         payment.transactionId ??
         "${payment.referencePrefix}-${randomAlphaNumeric(20)}",
-    "msisdn":
-        payment.country == Country.ne
-            ? '227${payment.msisdn}'
-            : '225${payment.msisdn}',
+    "msisdn": '${countryPrefixes[payment.country] ?? '227'}${payment.msisdn}',
     if (payment.paymentType == PaymentType.boa) ...{"payment_option": "sta"},
     if (payment.paymentType == PaymentType.card) ...{
       "payment_option": "card",
@@ -58,7 +56,11 @@ Future<String> ipayPayment(Ref ref, {required Payment? payment}) async {
     return res;
   } else {
     logger("ipayPayment(statusCode : ${response.statusCode}) :  $res");
-    throw ArgumentError(jsonDecode(res)["message"], response.reasonPhrase!);
+    throw IpayPaymentException(
+      message: jsonDecode(res)["message"] ?? 'Erreur inconnue',
+      statusCode: response.statusCode,
+      reasonPhrase: response.reasonPhrase,
+    );
   }
 }
 
@@ -100,7 +102,11 @@ Future<String> ipayVisaMasterCardPayment(
     logger(
       "ipayVisaMasterCardPayment(statusCode : ${response.statusCode}) : $res",
     );
-    throw ArgumentError(jsonDecode(res)["message"], response.reasonPhrase!);
+    throw IpayPaymentException(
+      message: jsonDecode(res)["message"] ?? 'Erreur inconnue',
+      statusCode: response.statusCode,
+      reasonPhrase: response.reasonPhrase,
+    );
   }
 }
 
@@ -120,7 +126,6 @@ Future<String> paymentEnquiry(Ref ref, {required Payment payment}) async {
     'GET',
     Uri.parse('$_apiBaseUrl/payments/${payment.reference}'),
   );
-  request.body = json.encode({"reference": payment.reference});
 
   request.headers.addAll(headers);
 
@@ -131,7 +136,11 @@ Future<String> paymentEnquiry(Ref ref, {required Payment payment}) async {
     return res;
   } else {
     logger("paymentEnquiry(statusCode : ${response.statusCode}) : $res");
-    throw ArgumentError(jsonDecode(res)["message"], response.reasonPhrase!);
+    throw IpayPaymentException(
+      message: jsonDecode(res)["message"] ?? 'Erreur inconnue',
+      statusCode: response.statusCode,
+      reasonPhrase: response.reasonPhrase,
+    );
   }
 }
 
