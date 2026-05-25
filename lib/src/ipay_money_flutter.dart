@@ -502,12 +502,14 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer>
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 8),
-          Text(
-            'La transaction n\'a pas pu être confirmée dans le temps imparti.',
-            style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
-            textAlign: TextAlign.center,
-          ),
+          if (widget.paymentTimeoutMsg == null) ...[
+            const SizedBox(height: 8),
+            Text(
+              'La transaction n\'a pas pu être confirmée dans le temps imparti.',
+              style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+              textAlign: TextAlign.center,
+            ),
+          ],
           const SizedBox(height: 32),
           SizedBox(
             width: double.infinity,
