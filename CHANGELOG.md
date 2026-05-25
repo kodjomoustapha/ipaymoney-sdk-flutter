@@ -1,3 +1,18 @@
+## 0.0.40
+- Add customizable timeout message (`paymentTimeoutMsg`) and icon (`paymentTimeoutIcon`) for `IpayPayments`, `IpayConsumer` and `IpayPaymentsWidget`
+- Add dedicated timeout state (`TransactionStatus.timeout`) separate from failure state
+- Redesign `IpayConsumer` bottom sheet with modern UI, animations and color-coded states
+- Fix `_checkStatus` polling logic (use `>=` instead of `==` for retry counter)
+- Fix `consecutiveRetries` not resetting on successful poll response
+- Fix `BuildContext` async gap in payment handlers
+- Fix hardcoded country prefix — now uses extensible `countryPrefixes` map
+- Fix HTTP GET request sending a body (now body-less)
+- Fix phone validator to support Benin prefixes (4x, 5x, 6x)
+- Fix Flutter SDK constraint (`>=3.10.0`)
+- Add `IpayPaymentException` for structured API error handling
+- Secure `Payment.toString()` to hide sensitive fields (authorization, pan, cvv, msisdn)
+- Add `@Deprecated` alias for `transationId` typo → `transactionId`
+
 ## 0.0.39
 - refactor
 ## 0.0.38
