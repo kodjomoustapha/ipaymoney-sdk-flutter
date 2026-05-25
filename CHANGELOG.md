@@ -1,3 +1,6 @@
+## 0.0.41
+- fix: conditionally display timeout message in payment confirmation
+
 ## 0.0.40
 - Add customizable timeout message (`paymentTimeoutMsg`) and icon (`paymentTimeoutIcon`) for `IpayPayments`, `IpayConsumer` and `IpayPaymentsWidget`
 - Add dedicated timeout state (`TransactionStatus.timeout`) separate from failure state
