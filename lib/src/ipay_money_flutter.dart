@@ -705,7 +705,7 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer>
                   ),
                 ),
                 const SizedBox(height: 6),
-                Text(
+                SelectableText(
                   widget.nitaCode!,
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
@@ -714,6 +714,22 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer>
                     color: Color(0xFF1A1A2E),
                   ),
                   textAlign: TextAlign.center,
+                ),
+                IconButton(
+                  icon: const Icon(Icons.copy, size: 20),
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: widget.nitaCode!));
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Référence copiée dans le presse-papiers',
+                          ),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }
+                  },
                 ),
               ],
             ),
@@ -754,7 +770,12 @@ class _IpayConsumerState extends ConsumerState<IpayConsumer>
                 ),
                 TextSpan(text: ', allez dans '),
                 TextSpan(
-                  text: 'Paiement > En ligne',
+                  text: 'Services Paiement ',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+                TextSpan(text: 'ensuite'),
+                TextSpan(
+                  text: ' En ligne',
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
                 TextSpan(text: ' puis validez la transaction.'),
