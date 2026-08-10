@@ -1,3 +1,6 @@
+## 0.0.42
+- add possibilty to copy reference to clipboard 
+
 ## 0.0.41
 - fix: conditionally display timeout message in payment confirmation
 
