@@ -972,10 +972,13 @@ Widget _noConnectionWidget({String? message}) {
         ),
         textAlign: TextAlign.center,
       ),
-      const Padding(
+
+      Padding(
         padding: EdgeInsets.all(8.0),
         child: Icon(
-          Icons.signal_cellular_connected_no_internet_4_bar,
+          message == null
+              ? Icons.signal_cellular_connected_no_internet_4_bar
+              : Icons.error,
           color: Colors.red,
           size: 50,
         ),
@@ -994,34 +997,38 @@ Widget _noConnectionWidgetPlus(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (error is IpayPaymentException) ...[
-          _noConnectionWidget(message: error.message),
+          _noConnectionWidget(
+            message: 'Une erreur est survenue veuillez réessayer.',
+          ),
         ] else
           _noConnectionWidget(),
+
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: primaryColor,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 14,
-                    horizontal: 30,
+              if (error is! IpayPaymentException)
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 14,
+                      horizontal: 30,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 3,
+                    shadowColor: primaryColor.withValues(alpha: 0.3),
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                  onPressed: onPressed,
+                  child: const Text(
+                    'Réessayer',
+                    style: TextStyle(color: Colors.white),
                   ),
-                  elevation: 3,
-                  shadowColor: primaryColor.withValues(alpha: 0.3),
                 ),
-                onPressed: onPressed,
-                child: const Text(
-                  'Réessayer',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
